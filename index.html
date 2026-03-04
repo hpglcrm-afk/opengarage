@@ -122,6 +122,58 @@
         .tour-skip:hover {
             color: #374151;
         }
+        /* FAQ accordion */
+        .faq-question {
+            cursor: pointer;
+            user-select: none;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-answer.open {
+            max-height: 200px; /* enough for answer */
+        }
+        /* City map mockup */
+        .city-map {
+            background: #a5d8ff;
+            background-image: radial-gradient(circle at 20% 30%, #6ba6d9 2px, transparent 2px), 
+                              radial-gradient(circle at 70% 60%, #6ba6d9 2px, transparent 2px),
+                              radial-gradient(circle at 40% 80%, #6ba6d9 2px, transparent 2px),
+                              radial-gradient(circle at 85% 20%, #6ba6d9 2px, transparent 2px),
+                              radial-gradient(circle at 15% 70%, #6ba6d9 2px, transparent 2px);
+            background-size: 100px 100px;
+            height: 200px;
+            border-radius: 1rem;
+            position: relative;
+        }
+        .city-pin {
+            position: absolute;
+            color: #f97316;
+            font-size: 1.8rem;
+            filter: drop-shadow(0 4px 2px rgba(0,0,0,0.2));
+            transform: translate(-50%, -100%);
+        }
+        .city-pin:nth-child(1) { top: 20%; left: 15%; }
+        .city-pin:nth-child(2) { top: 60%; left: 30%; }
+        .city-pin:nth-child(3) { top: 30%; left: 70%; }
+        .city-pin:nth-child(4) { top: 70%; left: 80%; }
+        .city-pin:nth-child(5) { top: 45%; left: 45%; }
+        .city-pin:nth-child(6) { top: 80%; left: 20%; }
+        .city-pin:nth-child(7) { top: 15%; left: 85%; }
+        .city-pin:nth-child(8) { top: 55%; left: 60%; }
+        /* Safety badges */
+        .badge {
+            background: white;
+            border-radius: 999px;
+            padding: 0.5rem 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            font-weight: 500;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans antialiased">
@@ -419,6 +471,111 @@
         </div>
     </section>
 
+    <!-- Safety badges + Pricing -->
+    <section class="py-12 bg-white border-t border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                <!-- Safety badges -->
+                <div class="flex flex-wrap justify-center gap-4">
+                    <div class="badge"><i class="fas fa-certificate text-orange-500"></i> Licensed</div>
+                    <div class="badge"><i class="fas fa-shield-alt text-orange-500"></i> Insured</div>
+                    <div class="badge"><i class="fas fa-thermometer-half text-orange-500"></i> Temp Checked</div>
+                </div>
+                <!-- Pricing card -->
+                <div class="bg-orange-50 p-6 rounded-2xl shadow-md flex items-center gap-4">
+                    <i class="fas fa-percent text-4xl text-orange-600"></i>
+                    <div>
+                        <p class="text-sm text-gray-600">Platform fee</p>
+                        <p class="text-3xl font-bold text-orange-600">10%</p>
+                        <p class="text-xs text-gray-500">Transparent, no hidden costs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live network stats + city map -->
+    <section class="py-20 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Live stats -->
+                <div>
+                    <h2 class="text-3xl font-bold mb-4">Growing every day</h2>
+                    <div class="bg-white p-8 rounded-3xl shadow-lg text-center">
+                        <i class="fas fa-utensils text-5xl text-orange-500 mb-4"></i>
+                        <p class="text-gray-600 mb-2">Meals cooked this week</p>
+                        <div id="live-counter" class="text-5xl font-bold text-orange-600">0</div>
+                        <p class="text-sm text-gray-400 mt-4">+2 every second (live demo)</p>
+                    </div>
+                </div>
+                <!-- City map with pins -->
+                <div>
+                    <h2 class="text-3xl font-bold mb-4">Your city, our kitchens</h2>
+                    <div class="city-map relative">
+                        <i class="fas fa-map-pin city-pin"></i>
+                        <i class="fas fa-map-pin city-pin"></i>
+                        <i class="fas fa-map-pin city-pin"></i>
+                        <i class="fas fa-map-pin city-pin"></i>
+                        <i class="fas fa-map-pin city-pin"></i>
+                        <i class="fas fa-map-pin city-pin"></i>
+                        <i class="fas fa-map-pin city-pin"></i>
+                        <i class="fas fa-map-pin city-pin"></i>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-4 text-center">Each pin is a licensed home kitchen in your neighborhood.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Accordion -->
+    <section class="py-20 bg-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12">Frequently asked questions</h2>
+            <div class="space-y-4">
+                <!-- FAQ 1 -->
+                <div class="border border-gray-200 rounded-2xl p-4">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-lg">How do I get licensed as a cook?</span>
+                        <i class="fas fa-chevron-down text-orange-500 transition-transform duration-300"></i>
+                    </div>
+                    <div class="faq-answer mt-2 text-gray-600">
+                        We guide you through the process: upload your ID, food handler's permit, and kitchen photos. We'll schedule a virtual inspection and help you meet local regulations.
+                    </div>
+                </div>
+                <!-- FAQ 2 -->
+                <div class="border border-gray-200 rounded-2xl p-4">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-lg">What are the fees for cooks?</span>
+                        <i class="fas fa-chevron-down text-orange-500 transition-transform duration-300"></i>
+                    </div>
+                    <div class="faq-answer mt-2 text-gray-600">
+                        We take a 10% platform fee on each order. There are no listing fees or monthly charges. You keep the rest.
+                    </div>
+                </div>
+                <!-- FAQ 3 -->
+                <div class="border border-gray-200 rounded-2xl p-4">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-lg">Is my food safe?</span>
+                        <i class="fas fa-chevron-down text-orange-500 transition-transform duration-300"></i>
+                    </div>
+                    <div class="faq-answer mt-2 text-gray-600">
+                        Every kitchen is licensed and inspected. Cooks submit daily temperature and cleaning logs. We monitor compliance continuously.
+                    </div>
+                </div>
+                <!-- FAQ 4 -->
+                <div class="border border-gray-200 rounded-2xl p-4">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-lg">How do I get my food?</span>
+                        <i class="fas fa-chevron-down text-orange-500 transition-transform duration-300"></i>
+                    </div>
+                    <div class="faq-answer mt-2 text-gray-600">
+                        You can choose pickup or delivery (if the cook offers it). We'll send you real-time updates and the cook's contact info.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Call to action -->
     <section class="bg-orange-600 text-white py-20">
         <div class="max-w-4xl mx-auto text-center px-4">
@@ -527,6 +684,28 @@
             document.getElementById('meals1').innerText = '1,000 meals';
             document.getElementById('meals2').innerText = '1,000 meals';
         });
+
+        // Live counter
+        let count = 12450; // starting point
+        const counterEl = document.getElementById('live-counter');
+        setInterval(() => {
+            count += 2;
+            counterEl.innerText = count.toLocaleString();
+        }, 1000);
+
+        // FAQ toggle
+        function toggleFaq(questionEl) {
+            const answer = questionEl.nextElementSibling;
+            const icon = questionEl.querySelector('i');
+            answer.classList.toggle('open');
+            if (answer.classList.contains('open')) {
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                answer.style.maxHeight = null;
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
 
         // Tour functionality
         const tourOverlay = document.getElementById('tour-overlay');
