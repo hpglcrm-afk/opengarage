@@ -186,6 +186,36 @@
             transform: translateY(-2px);
             box-shadow: 0 20px 30px -10px rgba(0,0,0,0.1);
         }
+        /* Delivery zone map mockup */
+        .zone-map {
+            background: #d1d5db;
+            height: 150px;
+            border-radius: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .zone-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(249, 115, 22, 0.2);
+            border: 2px dashed #f97316;
+        }
+        .zone-circle:nth-child(1) { top: 20%; left: 30%; width: 80px; height: 80px; }
+        .zone-circle:nth-child(2) { top: 50%; left: 60%; width: 100px; height: 100px; }
+        .zone-circle:nth-child(3) { top: 70%; left: 20%; width: 60px; height: 60px; }
+        /* Progress bar for tracking */
+        .tracking-progress {
+            background: #e5e7eb;
+            border-radius: 999px;
+            height: 0.5rem;
+            width: 100%;
+        }
+        .tracking-fill {
+            background: #f97316;
+            border-radius: 999px;
+            height: 100%;
+            width: 60%; /* Simulate in progress */
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans antialiased">
@@ -199,6 +229,8 @@
             </div>
             <div class="space-x-6 text-sm font-medium hidden md:flex">
                 <a href="#how-it-works" class="hover:text-orange-600 transition">How it works</a>
+                <a href="#discovery" class="hover:text-orange-600 transition">Discovery</a>
+                <a href="#logistics" class="hover:text-orange-600 transition">Logistics</a>
                 <a href="#features" class="hover:text-orange-600 transition">Features</a>
                 <a href="#why-us" class="hover:text-orange-600 transition">Why Open Garage</a>
                 <a href="#" id="nav-for-cooks" class="hover:text-orange-600 transition">For cooks</a>
@@ -297,7 +329,104 @@
         </div>
     </section>
 
-    <!-- How it works (tabs for cook/customer) - more concrete messaging -->
+    <!-- Smarter Discovery Section (NEW) -->
+    <section id="discovery" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <h2 class="text-3xl font-bold text-center mb-8">🔍 Smarter Discovery – Find your next favorite meal</h2>
+        <div class="bg-white rounded-3xl shadow-xl p-8">
+            <!-- Filter row -->
+            <div class="flex flex-wrap gap-3 justify-center mb-8">
+                <button class="bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-200">Cuisine</button>
+                <button class="bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-200">Dietary</button>
+                <button class="bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-200">Rating 4.5+</button>
+                <button id="surprise-btn" class="bg-orange-600 text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-orange-700">🎲 Surprise Me</button>
+            </div>
+            <!-- Personalized recommendations -->
+            <p class="text-gray-600 mb-4 text-center">Recommended for you based on your past orders</p>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="kitchen-card-mock p-4 relative">
+                    <i class="fas fa-utensils text-orange-400 text-2xl"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between">
+                            <span class="font-bold">Sofia's Kitchen</span>
+                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">★ 4.9</span>
+                        </div>
+                        <p class="text-sm text-gray-500">Greek • 0.5 miles</p>
+                        <button class="mt-2 bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-orange-200">Set recurring order</button>
+                    </div>
+                </div>
+                <div class="kitchen-card-mock p-4">
+                    <i class="fas fa-utensils text-orange-400 text-2xl"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between">
+                            <span class="font-bold">Little Vietnam</span>
+                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">★ 4.8</span>
+                        </div>
+                        <p class="text-sm text-gray-500">Vietnamese • 0.8 miles</p>
+                        <button class="mt-2 bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-orange-200">Set recurring order</button>
+                    </div>
+                </div>
+                <div class="kitchen-card-mock p-4">
+                    <i class="fas fa-utensils text-orange-400 text-2xl"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between">
+                            <span class="font-bold">Baker's Dozen</span>
+                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">★ 4.7</span>
+                        </div>
+                        <p class="text-sm text-gray-500">Bakery • 0.2 miles</p>
+                        <button class="mt-2 bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-orange-200">Set recurring order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Operational Logistics Section (NEW) -->
+    <section id="logistics" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <h2 class="text-3xl font-bold text-center mb-8">🚚 Operational Logistics – Smooth from kitchen to doorstep</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Delivery zones map -->
+            <div class="bg-white rounded-3xl shadow-xl p-6">
+                <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-map-signs text-orange-500"></i> Dynamic Delivery Zones</h3>
+                <div class="zone-map relative">
+                    <div class="zone-circle"></div>
+                    <div class="zone-circle"></div>
+                    <div class="zone-circle"></div>
+                    <!-- Fake pins -->
+                    <i class="fas fa-map-pin absolute text-orange-600" style="top: 25%; left: 35%;"></i>
+                    <i class="fas fa-map-pin absolute text-orange-600" style="top: 55%; left: 65%;"></i>
+                    <i class="fas fa-map-pin absolute text-orange-600" style="top: 75%; left: 25%;"></i>
+                </div>
+                <p class="text-sm text-gray-600 mt-4">Cooks set their delivery radius. We optimize routes for multiple orders.</p>
+            </div>
+            <!-- Real-time tracking mockup -->
+            <div class="bg-white rounded-3xl shadow-xl p-6">
+                <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-clock text-orange-500"></i> Real‑time Tracking</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between text-sm">
+                        <span>Order #234</span>
+                        <span class="text-orange-600 font-semibold">Preparing</span>
+                    </div>
+                    <div class="tracking-progress"><div class="tracking-fill"></div></div>
+                    <div class="flex justify-between text-xs text-gray-500">
+                        <span>Order placed</span>
+                        <span>Preparing</span>
+                        <span>Ready</span>
+                        <span>Picked up</span>
+                    </div>
+                    <div class="border-t pt-4 mt-4">
+                        <p class="text-sm font-medium">Contactless Pickup Lockers</p>
+                        <p class="text-xs text-gray-500">Pick up from secure lockers at your convenience.</p>
+                        <div class="flex gap-2 mt-2">
+                            <span class="bg-gray-100 px-2 py-1 rounded text-xs">📍 7‑Eleven on 5th</span>
+                            <span class="bg-gray-100 px-2 py-1 rounded text-xs">📍 Library branch</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works (tabs for cook/customer) - unchanged but kept for continuity -->
     <section id="how-it-works" class="gradient-bg py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-4">How it works – the practical way</h2>
@@ -308,7 +437,7 @@
                 <button id="tab-customer" class="tab-button px-6 py-3 text-lg font-semibold rounded-r-full border-2 border-orange-600 bg-white text-orange-600 transition-all duration-200 hover:bg-orange-50" onclick="switchTab('customer')">For Customers</button>
             </div>
 
-            <!-- Cook content - realistic steps -->
+            <!-- Cook content -->
             <div id="content-cook" class="tab-content grid md:grid-cols-2 gap-12 items-center">
                 <div class="space-y-6">
                     <h3 class="text-2xl font-bold">Turn your home kitchen into a real income stream</h3>
@@ -378,7 +507,7 @@
                 </div>
             </div>
 
-            <!-- Customer content - realistic steps -->
+            <!-- Customer content (hidden initially) -->
             <div id="content-customer" class="tab-content hidden grid md:grid-cols-2 gap-12 items-center">
                 <div class="space-y-6">
                     <h3 class="text-2xl font-bold">Discover real homemade food from your neighbors</h3>
@@ -500,7 +629,7 @@
         </div>
     </section>
 
-    <!-- Features (unchanged) -->
+    <!-- Features -->
     <section id="features" class="py-20 bg-white border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-4">Platform handles the hard stuff</h2>
@@ -530,7 +659,7 @@
         </div>
     </section>
 
-    <!-- Safety badges + Pricing (unchanged) -->
+    <!-- Safety badges + Pricing -->
     <section class="py-12 bg-white border-t border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row items-center justify-between gap-8">
@@ -553,7 +682,7 @@
         </div>
     </section>
 
-    <!-- Live network stats + city map (unchanged) -->
+    <!-- Live network stats + city map -->
     <section class="py-20 gradient-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -586,7 +715,7 @@
         </div>
     </section>
 
-    <!-- FAQ Accordion (unchanged) -->
+    <!-- FAQ Accordion -->
     <section class="py-20 bg-white">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-12">Frequently asked questions</h2>
@@ -694,7 +823,7 @@
         <button id="tour-skip" class="tour-skip">Skip</button>
     </div>
 
-    <!-- JavaScript (unchanged, except we added toggleFaq to global scope) -->
+    <!-- JavaScript -->
     <script>
         // Tab switching function
         function switchTab(role) {
@@ -735,6 +864,18 @@
                 msgDiv.classList.remove('animate-pulse');
             }, 1000);
         }
+
+        // Surprise me function
+        document.addEventListener('DOMContentLoaded', function() {
+            const surpriseBtn = document.getElementById('surprise-btn');
+            if (surpriseBtn) {
+                surpriseBtn.addEventListener('click', function() {
+                    const kitchens = ["Maria's Kitchen", "Chef Rossi", "Taste of India", "Sofia's Kitchen", "Little Vietnam", "Baker's Dozen"];
+                    const random = kitchens[Math.floor(Math.random() * kitchens.length)];
+                    alert(`🎲 How about trying ${random}? (Demo)`);
+                });
+            }
+        });
 
         // Animate comparison bars on page load
         window.addEventListener('load', function() {
@@ -777,8 +918,9 @@
             { element: '#how-it-works', message: 'Two views: one for cooks, one for customers. Click the tabs to explore.' },
             { element: '#cook-dashboard', message: 'Cooks get a simple dashboard to manage orders and compliance.', tab: 'cook' },
             { element: '#customer-browse', message: 'Customers can browse nearby kitchens and order directly.', tab: 'customer' },
-            { element: '#why-us', message: 'We solve real problems: licensing, trust, and community.' },
-            { element: '#features', message: 'We handle compliance, payments, and scheduling – so you don’t have to.' }
+            { element: '#discovery', message: 'Smarter discovery: filters, recommendations, and recurring orders.' },
+            { element: '#logistics', message: 'Operational logistics: delivery zones, real-time tracking, and contactless lockers.' },
+            { element: '#why-us', message: 'We solve real problems: licensing, trust, and community.' }
         ];
 
         let currentStep = 0;
