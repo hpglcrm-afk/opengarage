@@ -133,7 +133,7 @@
             transition: max-height 0.3s ease;
         }
         .faq-answer.open {
-            max-height: 200px; /* enough for answer */
+            max-height: 200px;
         }
         /* City map mockup */
         .city-map {
@@ -174,6 +174,18 @@
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
             font-weight: 500;
         }
+        /* Why choose us cards */
+        .reason-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+        .reason-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans antialiased">
@@ -188,6 +200,7 @@
             <div class="space-x-6 text-sm font-medium hidden md:flex">
                 <a href="#how-it-works" class="hover:text-orange-600 transition">How it works</a>
                 <a href="#features" class="hover:text-orange-600 transition">Features</a>
+                <a href="#why-us" class="hover:text-orange-600 transition">Why Open Garage</a>
                 <a href="#" id="nav-for-cooks" class="hover:text-orange-600 transition">For cooks</a>
                 <a href="#" id="nav-for-customers" class="hover:text-orange-600 transition">For customers</a>
             </div>
@@ -201,13 +214,13 @@
     <!-- Hero -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 text-center">
         <!-- Tagline -->
-        <p class="text-orange-600 font-semibold tracking-wide uppercase mb-3">Neighborhood kitchens. Homemade food. No restaurant overhead.</p>
+        <p class="text-orange-600 font-semibold tracking-wide uppercase mb-3">A real business for home cooks. Real food for neighbors.</p>
         <h1 class="text-5xl md:text-6xl font-extrabold leading-tight">
             <span class="bg-orange-100 text-orange-800 px-4 py-2 rounded-2xl inline-block mb-4">🔥 1️⃣ “Open Garage”</span><br>
             Distributed Micro-Production Kitchens
         </h1>
         <p class="text-xl text-gray-600 max-w-3xl mx-auto mt-6">
-            Not food delivery. Not ghost kitchens. A network of licensed home kitchens run by immigrant moms, retired chefs, and culinary students.
+            Not another delivery app. A platform that turns home kitchens into licensed micro-businesses. We handle compliance, payments, and logistics – so cooks can cook and neighbors can eat.
         </p>
         
         <!-- Visual comparison: 1 big kitchen vs 100 micro-kitchens (animated) -->
@@ -224,7 +237,7 @@
                 <div class="flex-1 comparison-bar"><div id="fill2" class="comparison-fill" style="width:0%"></div></div>
                 <span class="text-sm font-bold" id="meals2">0 meals</span>
             </div>
-            <p class="text-xs text-gray-400 mt-3">Same total output, but distributed, personal, and local.</p>
+            <p class="text-xs text-gray-400 mt-3">Same total output, but distributed, personal, and local. Less risk, more community.</p>
         </div>
 
         <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
@@ -239,9 +252,9 @@
 
     <!-- Quick Demo: Interactive Order Simulation -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <h2 class="text-3xl font-bold text-center mb-8">⚡ Quick Demo – See it in action</h2>
+        <h2 class="text-3xl font-bold text-center mb-8">⚡ See how it works – no signup required</h2>
         <div class="bg-white rounded-3xl shadow-xl p-8">
-            <p class="text-center text-gray-600 mb-6">Click any kitchen below to simulate placing an order.</p>
+            <p class="text-center text-gray-600 mb-6">Click any kitchen below to simulate placing an order. (Demo only)</p>
             <div class="grid md:grid-cols-3 gap-4">
                 <!-- Kitchen 1 -->
                 <div class="kitchen-card-mock p-4" onclick="simulateOrder('Maria’s Kitchen', 'Mexican')">
@@ -284,41 +297,41 @@
         </div>
     </section>
 
-    <!-- How it works (tabs for cook/customer) -->
+    <!-- How it works (tabs for cook/customer) - more concrete messaging -->
     <section id="how-it-works" class="gradient-bg py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-4">How it works</h2>
-            <p class="text-center text-gray-600 text-xl mb-12">One platform, two perspectives.</p>
+            <h2 class="text-4xl font-bold text-center mb-4">How it works – the practical way</h2>
+            <p class="text-center text-gray-600 text-xl mb-12">One platform, two perspectives. No fluff.</p>
             <!-- Tabs -->
             <div class="flex justify-center mb-8">
                 <button id="tab-cook" class="tab-button px-6 py-3 text-lg font-semibold rounded-l-full border-2 border-orange-600 bg-orange-600 text-white transition-all duration-200 hover:bg-orange-700 hover:border-orange-700" onclick="switchTab('cook')">For Cooks</button>
                 <button id="tab-customer" class="tab-button px-6 py-3 text-lg font-semibold rounded-r-full border-2 border-orange-600 bg-white text-orange-600 transition-all duration-200 hover:bg-orange-50" onclick="switchTab('customer')">For Customers</button>
             </div>
 
-            <!-- Cook content -->
+            <!-- Cook content - realistic steps -->
             <div id="content-cook" class="tab-content grid md:grid-cols-2 gap-12 items-center">
                 <div class="space-y-6">
-                    <h3 class="text-2xl font-bold">Turn your home kitchen into a micro-business</h3>
+                    <h3 class="text-2xl font-bold">Turn your home kitchen into a real income stream</h3>
                     <div class="flex items-start gap-4">
                         <div class="bg-orange-100 rounded-full p-2 w-10 h-10 flex items-center justify-center text-orange-600 font-bold">1</div>
-                        <div><span class="font-semibold">Apply & get licensed</span> – we guide you through food safety certification.</div>
+                        <div><span class="font-semibold">Get licensed with our help</span> – We guide you through food safety certification and local permits. No bureaucratic headaches.</div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="bg-orange-100 rounded-full p-2 w-10 h-10 flex items-center justify-center text-orange-600 font-bold">2</div>
-                        <div><span class="font-semibold">Set your menu, prices, and availability</span> – you're in control.</div>
+                        <div><span class="font-semibold">Set up your menu & prices</span> – List dishes, set availability, and decide if you offer pickup or delivery.</div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="bg-orange-100 rounded-full p-2 w-10 h-10 flex items-center justify-center text-orange-600 font-bold">3</div>
-                        <div><span class="font-semibold">Receive orders</span> and prepare fresh food for neighbors.</div>
+                        <div><span class="font-semibold">Receive orders & cook</span> – Get notifications when neighbors order. Prepare fresh food in your own kitchen.</div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="bg-orange-100 rounded-full p-2 w-10 h-10 flex items-center justify-center text-orange-600 font-bold">4</div>
-                        <div><span class="font-semibold">Get paid instantly</span> – we handle payments and compliance.</div>
+                        <div><span class="font-semibold">Get paid automatically</span> – We handle payment collection and deposit your earnings (minus 10% platform fee) directly to your bank.</div>
                     </div>
                     <button id="become-cook-btn" class="mt-4 bg-orange-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-orange-700 transition">Become a cook →</button>
                     <!-- Testimonial -->
                     <div class="mt-6 italic text-gray-600 border-l-4 border-orange-300 pl-4">
-                        “I used to cook for my family only. Now I earn $500 a week doing what I love.” – <span class="font-semibold">Maria, home cook</span>
+                        “I used to cook for my family only. Now I earn $500 a week doing what I love, and I’m fully insured.” – <span class="font-semibold">Maria, home cook</span>
                     </div>
                 </div>
                 <div class="mockup-card p-6" id="cook-dashboard">
@@ -365,30 +378,30 @@
                 </div>
             </div>
 
-            <!-- Customer content (hidden initially) -->
+            <!-- Customer content - realistic steps -->
             <div id="content-customer" class="tab-content hidden grid md:grid-cols-2 gap-12 items-center">
                 <div class="space-y-6">
-                    <h3 class="text-2xl font-bold">Discover homemade meals near you</h3>
+                    <h3 class="text-2xl font-bold">Discover real homemade food from your neighbors</h3>
                     <div class="flex items-start gap-4">
                         <div class="bg-orange-100 rounded-full p-2 w-10 h-10 flex items-center justify-center text-orange-600 font-bold">1</div>
-                        <div><span class="font-semibold">Browse local kitchens</span> by cuisine, ratings, and distance.</div>
+                        <div><span class="font-semibold">Browse nearby kitchens</span> – Filter by cuisine, rating, distance. See real menus and cook profiles.</div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="bg-orange-100 rounded-full p-2 w-10 h-10 flex items-center justify-center text-orange-600 font-bold">2</div>
-                        <div><span class="font-semibold">Order directly</span> – no delivery markups, just real home cooking.</div>
+                        <div><span class="font-semibold">Order directly from the cook</span> – No corporate middlemen. Choose pickup or delivery if offered.</div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="bg-orange-100 rounded-full p-2 w-10 h-10 flex items-center justify-center text-orange-600 font-bold">3</div>
-                        <div><span class="font-semibold">Pick up or get delivery</span> from the cook.</div>
+                        <div><span class="font-semibold">Pay securely through the platform</span> – Your payment is held until you confirm receipt.</div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="bg-orange-100 rounded-full p-2 w-10 h-10 flex items-center justify-center text-orange-600 font-bold">4</div>
-                        <div><span class="font-semibold">Leave reviews</span> and support your neighborhood food heroes.</div>
+                        <div><span class="font-semibold">Enjoy and review</span> – Support local food heroes and help others discover great meals.</div>
                     </div>
                     <button id="find-kitchens-btn" class="mt-4 bg-orange-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-orange-700 transition">Find kitchens near me →</button>
                     <!-- Testimonial -->
                     <div class="mt-6 italic text-gray-600 border-l-4 border-orange-300 pl-4">
-                        “I love knowing exactly who cooked my meal. It’s like having a personal chef next door.” – <span class="font-semibold">Alex, customer</span>
+                        “I love knowing exactly who cooked my meal. It’s like having a personal chef next door, and it’s always delicious.” – <span class="font-semibold">Alex, customer</span>
                     </div>
                 </div>
                 <div class="mockup-card p-6" id="customer-browse">
@@ -441,8 +454,54 @@
         </div>
     </section>
 
-    <!-- Features -->
-    <section id="features" class="py-20 bg-white">
+    <!-- Why Open Garage – solving real problems -->
+    <section id="why-us" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-4">Why Open Garage? Because it solves real problems.</h2>
+            <p class="text-center text-gray-600 text-xl mb-12">Not a fancy app – a practical business platform.</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- For cooks -->
+                <div class="reason-card">
+                    <i class="fas fa-home text-4xl text-orange-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">For cooks: A way to earn without the restaurant grind</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex gap-2"><i class="fas fa-times-circle text-red-400 mt-1"></i> <span class="font-medium">The problem:</span> You love cooking but can't afford a restaurant. Regulations are confusing. You're stuck at home.</li>
+                        <li class="flex gap-2"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span class="font-medium">Our solution:</span> We handle licensing, compliance, and payments. You just cook. Your kitchen becomes a legit business.</li>
+                    </ul>
+                </div>
+                <!-- For customers -->
+                <div class="reason-card">
+                    <i class="fas fa-users text-4xl text-orange-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">For customers: Real food from real people</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex gap-2"><i class="fas fa-times-circle text-red-400 mt-1"></i> <span class="font-medium">The problem:</span> Delivery apps are expensive, impersonal, and full of chain restaurants. You want authentic homemade meals.</li>
+                        <li class="flex gap-2"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span class="font-medium">Our solution:</span> Order directly from licensed home cooks in your neighborhood. Support local families and enjoy real cooking.</li>
+                    </ul>
+                </div>
+                <!-- For the community -->
+                <div class="reason-card">
+                    <i class="fas fa-city text-4xl text-orange-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">For communities: A resilient local food network</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex gap-2"><i class="fas fa-times-circle text-red-400 mt-1"></i> <span class="font-medium">The problem:</span> Centralized food systems are fragile. One disruption affects thousands.</li>
+                        <li class="flex gap-2"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span class="font-medium">Our solution:</span> Hundreds of small kitchens spread risk, create local jobs, and keep money in the neighborhood.</li>
+                    </ul>
+                </div>
+                <!-- Trust & safety -->
+                <div class="reason-card">
+                    <i class="fas fa-shield-alt text-4xl text-orange-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Trust & safety: We take it seriously</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex gap-2"><i class="fas fa-times-circle text-red-400 mt-1"></i> <span class="font-medium">The problem:</span> Is it safe to eat from a home kitchen? Are they following rules?</li>
+                        <li class="flex gap-2"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span class="font-medium">Our solution:</span> Every cook is licensed, insured, and monitored. Daily temperature logs, inspections, and customer ratings ensure quality.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features (unchanged) -->
+    <section id="features" class="py-20 bg-white border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-4">Platform handles the hard stuff</h2>
             <p class="text-center text-gray-600 text-xl mb-12">So cooks can focus on cooking, and customers enjoy peace of mind.</p>
@@ -471,7 +530,7 @@
         </div>
     </section>
 
-    <!-- Safety badges + Pricing -->
+    <!-- Safety badges + Pricing (unchanged) -->
     <section class="py-12 bg-white border-t border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row items-center justify-between gap-8">
@@ -494,7 +553,7 @@
         </div>
     </section>
 
-    <!-- Live network stats + city map -->
+    <!-- Live network stats + city map (unchanged) -->
     <section class="py-20 gradient-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -527,7 +586,7 @@
         </div>
     </section>
 
-    <!-- FAQ Accordion -->
+    <!-- FAQ Accordion (unchanged) -->
     <section class="py-20 bg-white">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-12">Frequently asked questions</h2>
@@ -635,7 +694,7 @@
         <button id="tour-skip" class="tour-skip">Skip</button>
     </div>
 
-    <!-- JavaScript for interactivity -->
+    <!-- JavaScript (unchanged, except we added toggleFaq to global scope) -->
     <script>
         // Tab switching function
         function switchTab(role) {
@@ -686,7 +745,7 @@
         });
 
         // Live counter
-        let count = 12450; // starting point
+        let count = 12450;
         const counterEl = document.getElementById('live-counter');
         setInterval(() => {
             count += 2;
@@ -694,7 +753,7 @@
         }, 1000);
 
         // FAQ toggle
-        function toggleFaq(questionEl) {
+        window.toggleFaq = function(questionEl) {
             const answer = questionEl.nextElementSibling;
             const icon = questionEl.querySelector('i');
             answer.classList.toggle('open');
@@ -705,7 +764,7 @@
                 answer.style.maxHeight = null;
                 icon.style.transform = 'rotate(0deg)';
             }
-        }
+        };
 
         // Tour functionality
         const tourOverlay = document.getElementById('tour-overlay');
@@ -718,6 +777,7 @@
             { element: '#how-it-works', message: 'Two views: one for cooks, one for customers. Click the tabs to explore.' },
             { element: '#cook-dashboard', message: 'Cooks get a simple dashboard to manage orders and compliance.', tab: 'cook' },
             { element: '#customer-browse', message: 'Customers can browse nearby kitchens and order directly.', tab: 'customer' },
+            { element: '#why-us', message: 'We solve real problems: licensing, trust, and community.' },
             { element: '#features', message: 'We handle compliance, payments, and scheduling – so you don’t have to.' }
         ];
 
