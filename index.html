@@ -30,22 +30,6 @@
             color: white;
             border-color: #f97316;
         }
-        .mini-map {
-            background: #e5e7eb;
-            height: 100px;
-            border-radius: 0.75rem;
-            position: relative;
-            overflow: hidden;
-        }
-        .map-pin {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -100%);
-            color: #f97316;
-            font-size: 2rem;
-            filter: drop-shadow(0 4px 2px rgba(0,0,0,0.1));
-        }
         .kitchen-card-mock {
             background: white;
             border-radius: 0.75rem;
@@ -154,6 +138,11 @@
             font-size: 1.8rem;
             filter: drop-shadow(0 4px 2px rgba(0,0,0,0.2));
             transform: translate(-50%, -100%);
+            transition: transform 0.2s;
+        }
+        .city-pin:hover {
+            transform: translate(-50%, -120%) scale(1.2);
+            z-index: 10;
         }
         .city-pin:nth-child(1) { top: 20%; left: 15%; }
         .city-pin:nth-child(2) { top: 60%; left: 30%; }
@@ -186,35 +175,30 @@
             transform: translateY(-2px);
             box-shadow: 0 20px 30px -10px rgba(0,0,0,0.1);
         }
-        /* Delivery zone map mockup */
-        .zone-map {
-            background: #d1d5db;
-            height: 150px;
-            border-radius: 1rem;
-            position: relative;
-            overflow: hidden;
+        /* Testimonial carousel */
+        .testimonial {
+            animation: fade 1s ease-in-out;
         }
-        .zone-circle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(249, 115, 22, 0.2);
-            border: 2px dashed #f97316;
+        @keyframes fade {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
-        .zone-circle:nth-child(1) { top: 20%; left: 30%; width: 80px; height: 80px; }
-        .zone-circle:nth-child(2) { top: 50%; left: 60%; width: 100px; height: 100px; }
-        .zone-circle:nth-child(3) { top: 70%; left: 20%; width: 60px; height: 60px; }
-        /* Progress bar for tracking */
-        .tracking-progress {
-            background: #e5e7eb;
-            border-radius: 999px;
-            height: 0.5rem;
-            width: 100%;
+        /* Benefit bullet */
+        .benefit {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
         }
-        .tracking-fill {
-            background: #f97316;
-            border-radius: 999px;
-            height: 100%;
-            width: 60%; /* Simulate in progress */
+        /* Comparison table */
+        .comparison-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .comparison-row:last-child {
+            border-bottom: none;
         }
     </style>
 </head>
@@ -229,15 +213,14 @@
             </div>
             <div class="space-x-6 text-sm font-medium hidden md:flex">
                 <a href="#how-it-works" class="hover:text-orange-600 transition">How it works</a>
-                <a href="#discovery" class="hover:text-orange-600 transition">Discovery</a>
-                <a href="#logistics" class="hover:text-orange-600 transition">Logistics</a>
-                <a href="#features" class="hover:text-orange-600 transition">Features</a>
                 <a href="#why-us" class="hover:text-orange-600 transition">Why Open Garage</a>
+                <a href="#features" class="hover:text-orange-600 transition">Features</a>
+                <a href="#success" class="hover:text-orange-600 transition">Success stories</a>
                 <a href="#" id="nav-for-cooks" class="hover:text-orange-600 transition">For cooks</a>
                 <a href="#" id="nav-for-customers" class="hover:text-orange-600 transition">For customers</a>
             </div>
             <div class="space-x-3">
-                <button id="tour-btn" class="border border-orange-600 text-orange-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-50 transition">🎬 Take a tour</button>
+                <button id="tour-btn" class="border border-orange-600 text-orange-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-50 transition animate-pulse">🎬 Take a tour</button>
                 <button id="get-started-btn" class="bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-700 transition">Get started</button>
             </div>
         </div>
@@ -245,17 +228,16 @@
 
     <!-- Hero -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 text-center">
-        <!-- Tagline -->
-        <p class="text-orange-600 font-semibold tracking-wide uppercase mb-3">A real business for home cooks. Real food for neighbors.</p>
+        <p class="text-orange-600 font-semibold tracking-wide uppercase mb-3">Stop wondering if it's safe or legal. We've got you covered.</p>
         <h1 class="text-5xl md:text-6xl font-extrabold leading-tight">
             <span class="bg-orange-100 text-orange-800 px-4 py-2 rounded-2xl inline-block mb-4">🔥 1️⃣ “Open Garage”</span><br>
-            Distributed Micro-Production Kitchens
+            Turn your home kitchen into a legal, income‑generating business.
         </h1>
         <p class="text-xl text-gray-600 max-w-3xl mx-auto mt-6">
-            Not another delivery app. A platform that turns home kitchens into licensed micro-businesses. We handle compliance, payments, and logistics – so cooks can cook and neighbors can eat.
+            No restaurant overhead. No confusing regulations. No corporate middlemen. Just you, your kitchen, and your neighbors.
         </p>
         
-        <!-- Visual comparison: 1 big kitchen vs 100 micro-kitchens (animated) -->
+        <!-- Visual comparison -->
         <div class="mt-12 max-w-2xl mx-auto bg-white p-6 rounded-3xl shadow-lg" id="comparison">
             <p class="text-sm font-semibold text-gray-500 mb-3">Instead of 1 big kitchen serving 1,000 people</p>
             <div class="flex items-center gap-2 mb-2">
@@ -269,7 +251,7 @@
                 <div class="flex-1 comparison-bar"><div id="fill2" class="comparison-fill" style="width:0%"></div></div>
                 <span class="text-sm font-bold" id="meals2">0 meals</span>
             </div>
-            <p class="text-xs text-gray-400 mt-3">Same total output, but distributed, personal, and local. Less risk, more community.</p>
+            <p class="text-xs text-gray-400 mt-3">Same total output, but distributed, personal, and local.</p>
         </div>
 
         <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
@@ -282,13 +264,12 @@
         </div>
     </section>
 
-    <!-- Quick Demo: Interactive Order Simulation -->
+    <!-- Quick Demo -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <h2 class="text-3xl font-bold text-center mb-8">⚡ See how it works – no signup required</h2>
         <div class="bg-white rounded-3xl shadow-xl p-8">
             <p class="text-center text-gray-600 mb-6">Click any kitchen below to simulate placing an order. (Demo only)</p>
             <div class="grid md:grid-cols-3 gap-4">
-                <!-- Kitchen 1 -->
                 <div class="kitchen-card-mock p-4" onclick="simulateOrder('Maria’s Kitchen', 'Mexican')">
                     <i class="fas fa-utensils text-orange-400 text-2xl"></i>
                     <div class="flex-1">
@@ -296,11 +277,9 @@
                             <span class="font-bold">Maria’s Kitchen</span>
                             <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">★ 4.9</span>
                         </div>
-                        <p class="text-sm text-gray-500">Mexican • 0.3 miles • <span class="text-orange-600">$12 avg</span></p>
-                        <button class="mt-2 bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-orange-200">Order now →</button>
+                        <p class="text-sm text-gray-500">Mexican • 0.3 miles • $12 avg</p>
                     </div>
                 </div>
-                <!-- Kitchen 2 -->
                 <div class="kitchen-card-mock p-4" onclick="simulateOrder('Chef Rossi', 'Italian')">
                     <i class="fas fa-utensils text-orange-400 text-2xl"></i>
                     <div class="flex-1">
@@ -308,11 +287,9 @@
                             <span class="font-bold">Chef Rossi</span>
                             <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">★ 4.8</span>
                         </div>
-                        <p class="text-sm text-gray-500">Italian • 0.7 miles • <span class="text-orange-600">$18 avg</span></p>
-                        <button class="mt-2 bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-orange-200">Order now →</button>
+                        <p class="text-sm text-gray-500">Italian • 0.7 miles • $18 avg</p>
                     </div>
                 </div>
-                <!-- Kitchen 3 -->
                 <div class="kitchen-card-mock p-4" onclick="simulateOrder('Taste of India', 'Indian')">
                     <i class="fas fa-utensils text-orange-400 text-2xl"></i>
                     <div class="flex-1">
@@ -320,8 +297,7 @@
                             <span class="font-bold">Taste of India</span>
                             <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">★ 4.7</span>
                         </div>
-                        <p class="text-sm text-gray-500">Indian • 1.2 miles • <span class="text-orange-600">$14 avg</span></p>
-                        <button class="mt-2 bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-orange-200">Order now →</button>
+                        <p class="text-sm text-gray-500">Indian • 1.2 miles • $14 avg</p>
                     </div>
                 </div>
             </div>
@@ -329,436 +305,378 @@
         </div>
     </section>
 
-    <!-- Smarter Discovery Section (NEW) -->
-    <section id="discovery" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <h2 class="text-3xl font-bold text-center mb-8">🔍 Smarter Discovery – Find your next favorite meal</h2>
-        <div class="bg-white rounded-3xl shadow-xl p-8">
-            <!-- Filter row -->
-            <div class="flex flex-wrap gap-3 justify-center mb-8">
-                <button class="bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-200">Cuisine</button>
-                <button class="bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-200">Dietary</button>
-                <button class="bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-200">Rating 4.5+</button>
-                <button id="surprise-btn" class="bg-orange-600 text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-orange-700">🎲 Surprise Me</button>
-            </div>
-            <!-- Personalized recommendations -->
-            <p class="text-gray-600 mb-4 text-center">Recommended for you based on your past orders</p>
-            <div class="grid md:grid-cols-3 gap-4">
-                <div class="kitchen-card-mock p-4 relative">
-                    <i class="fas fa-utensils text-orange-400 text-2xl"></i>
-                    <div class="flex-1">
-                        <div class="flex justify-between">
-                            <span class="font-bold">Sofia's Kitchen</span>
-                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">★ 4.9</span>
-                        </div>
-                        <p class="text-sm text-gray-500">Greek • 0.5 miles</p>
-                        <button class="mt-2 bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-orange-200">Set recurring order</button>
-                    </div>
-                </div>
-                <div class="kitchen-card-mock p-4">
-                    <i class="fas fa-utensils text-orange-400 text-2xl"></i>
-                    <div class="flex-1">
-                        <div class="flex justify-between">
-                            <span class="font-bold">Little Vietnam</span>
-                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">★ 4.8</span>
-                        </div>
-                        <p class="text-sm text-gray-500">Vietnamese • 0.8 miles</p>
-                        <button class="mt-2 bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-orange-200">Set recurring order</button>
-                    </div>
-                </div>
-                <div class="kitchen-card-mock p-4">
-                    <i class="fas fa-utensils text-orange-400 text-2xl"></i>
-                    <div class="flex-1">
-                        <div class="flex justify-between">
-                            <span class="font-bold">Baker's Dozen</span>
-                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">★ 4.7</span>
-                        </div>
-                        <p class="text-sm text-gray-500">Bakery • 0.2 miles</p>
-                        <button class="mt-2 bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-orange-200">Set recurring order</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Operational Logistics Section (NEW) -->
-    <section id="logistics" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <h2 class="text-3xl font-bold text-center mb-8">🚚 Operational Logistics – Smooth from kitchen to doorstep</h2>
-        <div class="grid md:grid-cols-2 gap-8">
-            <!-- Delivery zones map -->
-            <div class="bg-white rounded-3xl shadow-xl p-6">
-                <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-map-signs text-orange-500"></i> Dynamic Delivery Zones</h3>
-                <div class="zone-map relative">
-                    <div class="zone-circle"></div>
-                    <div class="zone-circle"></div>
-                    <div class="zone-circle"></div>
-                    <!-- Fake pins -->
-                    <i class="fas fa-map-pin absolute text-orange-600" style="top: 25%; left: 35%;"></i>
-                    <i class="fas fa-map-pin absolute text-orange-600" style="top: 55%; left: 65%;"></i>
-                    <i class="fas fa-map-pin absolute text-orange-600" style="top: 75%; left: 25%;"></i>
-                </div>
-                <p class="text-sm text-gray-600 mt-4">Cooks set their delivery radius. We optimize routes for multiple orders.</p>
-            </div>
-            <!-- Real-time tracking mockup -->
-            <div class="bg-white rounded-3xl shadow-xl p-6">
-                <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-clock text-orange-500"></i> Real‑time Tracking</h3>
-                <div class="space-y-4">
-                    <div class="flex justify-between text-sm">
-                        <span>Order #234</span>
-                        <span class="text-orange-600 font-semibold">Preparing</span>
-                    </div>
-                    <div class="tracking-progress"><div class="tracking-fill"></div></div>
-                    <div class="flex justify-between text-xs text-gray-500">
-                        <span>Order placed</span>
-                        <span>Preparing</span>
-                        <span>Ready</span>
-                        <span>Picked up</span>
-                    </div>
-                    <div class="border-t pt-4 mt-4">
-                        <p class="text-sm font-medium">Contactless Pickup Lockers</p>
-                        <p class="text-xs text-gray-500">Pick up from secure lockers at your convenience.</p>
-                        <div class="flex gap-2 mt-2">
-                            <span class="bg-gray-100 px-2 py-1 rounded text-xs">📍 7‑Eleven on 5th</span>
-                            <span class="bg-gray-100 px-2 py-1 rounded text-xs">📍 Library branch</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How it works (tabs for cook/customer) - unchanged but kept for continuity -->
+    <!-- How it works (tabs) with step icons -->
     <section id="how-it-works" class="gradient-bg py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-4">How it works – the practical way</h2>
-            <p class="text-center text-gray-600 text-xl mb-12">One platform, two perspectives. No fluff.</p>
-            <!-- Tabs -->
+            <h2 class="text-4xl font-bold text-center mb-4">How it works – the simple way</h2>
             <div class="flex justify-center mb-8">
-                <button id="tab-cook" class="tab-button px-6 py-3 text-lg font-semibold rounded-l-full border-2 border-orange-600 bg-orange-600 text-white transition-all duration-200 hover:bg-orange-700 hover:border-orange-700" onclick="switchTab('cook')">For Cooks</button>
-                <button id="tab-customer" class="tab-button px-6 py-3 text-lg font-semibold rounded-r-full border-2 border-orange-600 bg-white text-orange-600 transition-all duration-200 hover:bg-orange-50" onclick="switchTab('customer')">For Customers</button>
+                <button id="tab-cook" class="tab-button px-6 py-3 text-lg font-semibold rounded-l-full border-2 border-orange-600 bg-orange-600 text-white" onclick="switchTab('cook')">For Cooks</button>
+                <button id="tab-customer" class="tab-button px-6 py-3 text-lg font-semibold rounded-r-full border-2 border-orange-600 bg-white text-orange-600" onclick="switchTab('customer')">For Customers</button>
             </div>
 
             <!-- Cook content -->
             <div id="content-cook" class="tab-content grid md:grid-cols-2 gap-12 items-center">
-                <div class="space-y-6">
-                    <h3 class="text-2xl font-bold">Turn your home kitchen into a real income stream</h3>
-                    <div class="flex items-start gap-4">
-                        <div class="bg-orange-100 rounded-full p-2 w-10 h-10 flex items-center justify-center text-orange-600 font-bold">1</div>
-                        <div><span class="font-semibold">Get licensed with our help</span> – We guide you through food safety certification and local permits. No bureaucratic headaches.</div>
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">Turn your kitchen into a business</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="bg-orange-100 rounded-full w-8 h-8 flex items-center justify-center text-orange-600 font-bold">1</div>
+                            <p class="text-gray-700"><span class="font-semibold">Get licensed & insured</span> – We guide you through the process.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="bg-orange-100 rounded-full w-8 h-8 flex items-center justify-center text-orange-600 font-bold">2</div>
+                            <p class="text-gray-700"><span class="font-semibold">Set your menu & prices</span> – You're in control.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="bg-orange-100 rounded-full w-8 h-8 flex items-center justify-center text-orange-600 font-bold">3</div>
+                            <p class="text-gray-700"><span class="font-semibold">Receive orders & cook</span> – Get notified when neighbors order.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="bg-orange-100 rounded-full w-8 h-8 flex items-center justify-center text-orange-600 font-bold">4</div>
+                            <p class="text-gray-700"><span class="font-semibold">Get paid automatically</span> – We handle payments (10% fee).</p>
+                        </div>
                     </div>
-                    <div class="flex items-start gap-4">
-                        <div class="bg-orange-100 rounded-full p-2 w-10 h-10 flex items-center justify-center text-orange-600 font-bold">2</div>
-                        <div><span class="font-semibold">Set up your menu & prices</span> – List dishes, set availability, and decide if you offer pickup or delivery.</div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="bg-orange-100 rounded-full p-2 w-10 h-10 flex items-center justify-center text-orange-600 font-bold">3</div>
-                        <div><span class="font-semibold">Receive orders & cook</span> – Get notifications when neighbors order. Prepare fresh food in your own kitchen.</div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="bg-orange-100 rounded-full p-2 w-10 h-10 flex items-center justify-center text-orange-600 font-bold">4</div>
-                        <div><span class="font-semibold">Get paid automatically</span> – We handle payment collection and deposit your earnings (minus 10% platform fee) directly to your bank.</div>
-                    </div>
-                    <button id="become-cook-btn" class="mt-4 bg-orange-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-orange-700 transition">Become a cook →</button>
-                    <!-- Testimonial -->
-                    <div class="mt-6 italic text-gray-600 border-l-4 border-orange-300 pl-4">
-                        “I used to cook for my family only. Now I earn $500 a week doing what I love, and I’m fully insured.” – <span class="font-semibold">Maria, home cook</span>
-                    </div>
+                    <button id="become-cook-btn" class="mt-8 bg-orange-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-orange-700 transition">Become a cook →</button>
                 </div>
                 <div class="mockup-card p-6" id="cook-dashboard">
-                    <!-- Cook Dashboard Mockup -->
-                    <div class="flex items-center gap-2 mb-4">
-                        <i class="fas fa-chart-line text-orange-500"></i>
-                        <span class="font-semibold">Today's Overview</span>
-                    </div>
+                    <div class="flex items-center gap-2 mb-3"><i class="fas fa-chart-line text-orange-500"></i><span class="font-semibold">Today's Overview</span></div>
                     <div class="space-y-3">
-                        <div class="flex justify-between items-center bg-orange-50 p-2 rounded-lg">
-                            <span class="text-sm">Orders today</span>
-                            <span class="font-bold">8</span>
-                        </div>
-                        <div class="border-t pt-2">
-                            <div class="flex items-center gap-2 text-sm">
-                                <i class="fas fa-clock text-gray-400"></i>
-                                <span class="font-medium">Upcoming orders</span>
-                            </div>
-                            <div class="mt-2 space-y-2">
-                                <div class="flex justify-between items-center text-sm">
-                                    <span>#234 - Pasta</span>
-                                    <span class="text-green-600">Ready in 15 min</span>
-                                </div>
-                                <div class="flex justify-between items-center text-sm">
-                                    <span>#235 - Tacos</span>
-                                    <span class="text-yellow-600">Preparing</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border-t pt-2">
-                            <div class="flex items-center gap-2 text-sm">
-                                <i class="fas fa-utensils text-gray-400"></i>
-                                <span class="font-medium">Menu (4 items)</span>
-                            </div>
-                            <div class="mt-1 flex gap-1 flex-wrap">
-                                <span class="bg-gray-100 px-2 py-1 rounded-full text-xs">🍝 Pasta</span>
-                                <span class="bg-gray-100 px-2 py-1 rounded-full text-xs">🌮 Tacos</span>
-                                <span class="bg-gray-100 px-2 py-1 rounded-full text-xs">🥗 Salad</span>
-                                <span class="bg-gray-100 px-2 py-1 rounded-full text-xs">🍰 Cake</span>
-                            </div>
-                        </div>
+                        <div class="flex justify-between bg-orange-50 p-2 rounded">Orders today <span class="font-bold">8</span></div>
+                        <div><span class="text-sm font-medium">Upcoming</span> #234 Pasta (15 min) • #235 Tacos (preparing)</div>
+                        <div><span class="text-sm font-medium">Menu</span> Pasta, Tacos, Salad, Cake</div>
                     </div>
-                    <p class="text-xs text-gray-400 mt-4 text-center">Cook dashboard preview</p>
                 </div>
             </div>
 
-            <!-- Customer content (hidden initially) -->
+            <!-- Customer content -->
             <div id="content-customer" class="tab-content hidden grid md:grid-cols-2 gap-12 items-center">
-                <div class="space-y-6">
-                    <h3 class="text-2xl font-bold">Discover real homemade food from your neighbors</h3>
-                    <div class="flex items-start gap-4">
-                        <div class="bg-orange-100 rounded-full p-2 w-10 h-10 flex items-center justify-center text-orange-600 font-bold">1</div>
-                        <div><span class="font-semibold">Browse nearby kitchens</span> – Filter by cuisine, rating, distance. See real menus and cook profiles.</div>
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">Discover homemade meals near you</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="bg-orange-100 rounded-full w-8 h-8 flex items-center justify-center text-orange-600 font-bold">1</div>
+                            <p class="text-gray-700"><span class="font-semibold">Browse kitchens</span> by cuisine, rating, distance.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="bg-orange-100 rounded-full w-8 h-8 flex items-center justify-center text-orange-600 font-bold">2</div>
+                            <p class="text-gray-700"><span class="font-semibold">Order directly</span> – No corporate middlemen.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="bg-orange-100 rounded-full w-8 h-8 flex items-center justify-center text-orange-600 font-bold">3</div>
+                            <p class="text-gray-700"><span class="font-semibold">Pay securely</span> – Funds held until you confirm.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="bg-orange-100 rounded-full w-8 h-8 flex items-center justify-center text-orange-600 font-bold">4</div>
+                            <p class="text-gray-700"><span class="font-semibold">Review & support</span> local cooks.</p>
+                        </div>
                     </div>
-                    <div class="flex items-start gap-4">
-                        <div class="bg-orange-100 rounded-full p-2 w-10 h-10 flex items-center justify-center text-orange-600 font-bold">2</div>
-                        <div><span class="font-semibold">Order directly from the cook</span> – No corporate middlemen. Choose pickup or delivery if offered.</div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="bg-orange-100 rounded-full p-2 w-10 h-10 flex items-center justify-center text-orange-600 font-bold">3</div>
-                        <div><span class="font-semibold">Pay securely through the platform</span> – Your payment is held until you confirm receipt.</div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="bg-orange-100 rounded-full p-2 w-10 h-10 flex items-center justify-center text-orange-600 font-bold">4</div>
-                        <div><span class="font-semibold">Enjoy and review</span> – Support local food heroes and help others discover great meals.</div>
-                    </div>
-                    <button id="find-kitchens-btn" class="mt-4 bg-orange-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-orange-700 transition">Find kitchens near me →</button>
-                    <!-- Testimonial -->
-                    <div class="mt-6 italic text-gray-600 border-l-4 border-orange-300 pl-4">
-                        “I love knowing exactly who cooked my meal. It’s like having a personal chef next door, and it’s always delicious.” – <span class="font-semibold">Alex, customer</span>
-                    </div>
+                    <button id="find-kitchens-btn" class="mt-8 bg-orange-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-orange-700 transition">Find kitchens near me →</button>
                 </div>
                 <div class="mockup-card p-6" id="customer-browse">
-                    <!-- Customer Browse Mockup -->
-                    <div class="flex items-center gap-2 mb-3">
-                        <i class="fas fa-map-marked-alt text-orange-500"></i>
-                        <span class="font-semibold">Nearby kitchens</span>
-                    </div>
-                    <!-- Mini map -->
-                    <div class="mini-map bg-gray-200 mb-3 flex items-center justify-center">
-                        <i class="fas fa-map-pin map-pin text-orange-500 text-3xl"></i>
-                        <span class="text-xs text-gray-500">Your location</span>
-                    </div>
-                    <!-- Kitchen cards -->
+                    <div class="flex items-center gap-2 mb-3"><i class="fas fa-map-marked-alt text-orange-500"></i><span class="font-semibold">Nearby kitchens</span></div>
                     <div class="space-y-2">
-                        <div class="kitchen-card-mock" onclick="simulateOrder('Maria’s Kitchen', 'Mexican')">
-                            <i class="fas fa-utensils text-orange-400"></i>
-                            <div class="flex-1">
-                                <div class="flex justify-between">
-                                    <span class="font-medium text-sm">Maria's Kitchen</span>
-                                    <span class="text-xs bg-green-100 text-green-700 px-1 rounded">★ 4.9</span>
-                                </div>
-                                <p class="text-xs text-gray-500">Mexican • 0.3 miles</p>
-                            </div>
+                        <div class="kitchen-card-mock p-2" onclick="simulateOrder('Maria’s Kitchen', 'Mexican')">
+                            <i class="fas fa-utensils text-orange-400"></i> Maria's Kitchen ★4.9 • 0.3 mi
                         </div>
-                        <div class="kitchen-card-mock" onclick="simulateOrder('Chef Rossi', 'Italian')">
-                            <i class="fas fa-utensils text-orange-400"></i>
-                            <div class="flex-1">
-                                <div class="flex justify-between">
-                                    <span class="font-medium text-sm">Chef Rossi</span>
-                                    <span class="text-xs bg-green-100 text-green-700 px-1 rounded">★ 4.8</span>
-                                </div>
-                                <p class="text-xs text-gray-500">Italian • 0.7 miles</p>
-                            </div>
-                        </div>
-                        <div class="kitchen-card-mock" onclick="simulateOrder('Taste of India', 'Indian')">
-                            <i class="fas fa-utensils text-orange-400"></i>
-                            <div class="flex-1">
-                                <div class="flex justify-between">
-                                    <span class="font-medium text-sm">Taste of India</span>
-                                    <span class="text-xs bg-green-100 text-green-700 px-1 rounded">★ 4.7</span>
-                                </div>
-                                <p class="text-xs text-gray-500">Indian • 1.2 miles</p>
-                            </div>
+                        <div class="kitchen-card-mock p-2" onclick="simulateOrder('Chef Rossi', 'Italian')">
+                            <i class="fas fa-utensils text-orange-400"></i> Chef Rossi ★4.8 • 0.7 mi
                         </div>
                     </div>
-                    <p class="text-xs text-gray-400 mt-4 text-center">Customer browse preview</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Why Open Garage – solving real problems -->
-    <section id="why-us" class="py-20 bg-white">
+    <!-- Testimonial Carousel -->
+    <section class="py-12 bg-white">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-8">Real people, real results</h2>
+            <div id="testimonial" class="testimonial text-xl italic text-gray-700">“I used to cook for my family only. Now I earn $500 a week doing what I love.” – Maria, cook</div>
+        </div>
+    </section>
+
+    <!-- Why Open Garage – Direct benefits (enhanced) -->
+    <section id="why-us" class="py-20 bg-white border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-4">Why Open Garage? Because it solves real problems.</h2>
-            <p class="text-center text-gray-600 text-xl mb-12">Not a fancy app – a practical business platform.</p>
-            <div class="grid md:grid-cols-2 gap-8">
+            <h2 class="text-4xl font-bold text-center mb-4">Why use Open Garage?</h2>
+            <p class="text-center text-gray-600 text-xl mb-12">Because it solves the frustrations you face every day.</p>
+            <div class="grid md:grid-cols-2 gap-12">
                 <!-- For cooks -->
-                <div class="reason-card">
-                    <i class="fas fa-home text-4xl text-orange-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold mb-2">For cooks: A way to earn without the restaurant grind</h3>
-                    <ul class="space-y-3 text-gray-700">
-                        <li class="flex gap-2"><i class="fas fa-times-circle text-red-400 mt-1"></i> <span class="font-medium">The problem:</span> You love cooking but can't afford a restaurant. Regulations are confusing. You're stuck at home.</li>
-                        <li class="flex gap-2"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span class="font-medium">Our solution:</span> We handle licensing, compliance, and payments. You just cook. Your kitchen becomes a legit business.</li>
-                    </ul>
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-bold flex items-center gap-2"><i class="fas fa-utensils text-orange-500"></i> For cooks</h3>
+                    <div class="benefit">
+                        <i class="fas fa-times-circle text-red-400 text-xl"></i>
+                        <span><span class="font-semibold">You love cooking</span> but can't afford a restaurant.</span>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                        <span><span class="font-semibold">Open Garage</span> turns your home kitchen into a legal, income‑generating business.</span>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-times-circle text-red-400 text-xl"></i>
+                        <span><span class="font-semibold">Regulations are confusing</span> and licensing feels overwhelming.</span>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                        <span><span class="font-semibold">We handle all compliance</span> – from permits to daily logs.</span>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-times-circle text-red-400 text-xl"></i>
+                        <span><span class="font-semibold">You worry about payments</span> and chasing customers.</span>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                        <span><span class="font-semibold">We process payments automatically</span> – you get paid instantly.</span>
+                    </div>
                 </div>
                 <!-- For customers -->
-                <div class="reason-card">
-                    <i class="fas fa-users text-4xl text-orange-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold mb-2">For customers: Real food from real people</h3>
-                    <ul class="space-y-3 text-gray-700">
-                        <li class="flex gap-2"><i class="fas fa-times-circle text-red-400 mt-1"></i> <span class="font-medium">The problem:</span> Delivery apps are expensive, impersonal, and full of chain restaurants. You want authentic homemade meals.</li>
-                        <li class="flex gap-2"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span class="font-medium">Our solution:</span> Order directly from licensed home cooks in your neighborhood. Support local families and enjoy real cooking.</li>
-                    </ul>
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-bold flex items-center gap-2"><i class="fas fa-users text-orange-500"></i> For customers</h3>
+                    <div class="benefit">
+                        <i class="fas fa-times-circle text-red-400 text-xl"></i>
+                        <span><span class="font-semibold">Delivery apps are expensive</span> and full of chain restaurants.</span>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                        <span><span class="font-semibold">Order directly from local cooks</span> – authentic, homemade meals at fair prices.</span>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-times-circle text-red-400 text-xl"></i>
+                        <span><span class="font-semibold">You never know who cooked your food</span> or if it's safe.</span>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                        <span><span class="font-semibold">Every kitchen is licensed, insured, and monitored</span> – safety guaranteed.</span>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-times-circle text-red-400 text-xl"></i>
+                        <span><span class="font-semibold">You want to support local</span> but don't know how.</span>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                        <span><span class="font-semibold">Your order directly supports a neighbor</span> – money stays in the community.</span>
+                    </div>
                 </div>
-                <!-- For the community -->
-                <div class="reason-card">
-                    <i class="fas fa-city text-4xl text-orange-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold mb-2">For communities: A resilient local food network</h3>
-                    <ul class="space-y-3 text-gray-700">
-                        <li class="flex gap-2"><i class="fas fa-times-circle text-red-400 mt-1"></i> <span class="font-medium">The problem:</span> Centralized food systems are fragile. One disruption affects thousands.</li>
-                        <li class="flex gap-2"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span class="font-medium">Our solution:</span> Hundreds of small kitchens spread risk, create local jobs, and keep money in the neighborhood.</li>
-                    </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories (NEW) -->
+    <section id="success" class="py-20 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-4">Success stories</h2>
+            <p class="text-center text-gray-600 text-xl mb-12">Real people, real businesses, real impact.</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-2xl shadow-lg">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://placehold.co/60x60/F97316/white?text=MC" class="rounded-full">
+                        <div>
+                            <h3 class="font-bold text-xl">Maria's Kitchen</h3>
+                            <p class="text-orange-600">Mexican • Cook since 2023</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">“I started with just my family recipes. Now I feed 20 neighbors a week and earn enough to support my kids. Open Garage made it legal and easy.”</p>
+                    <div class="mt-4 flex gap-2">
+                        <span class="badge"><i class="fas fa-star text-yellow-400"></i> 4.9</span>
+                        <span class="badge">250+ orders</span>
+                    </div>
                 </div>
-                <!-- Trust & safety -->
-                <div class="reason-card">
-                    <i class="fas fa-shield-alt text-4xl text-orange-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold mb-2">Trust & safety: We take it seriously</h3>
-                    <ul class="space-y-3 text-gray-700">
-                        <li class="flex gap-2"><i class="fas fa-times-circle text-red-400 mt-1"></i> <span class="font-medium">The problem:</span> Is it safe to eat from a home kitchen? Are they following rules?</li>
-                        <li class="flex gap-2"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span class="font-medium">Our solution:</span> Every cook is licensed, insured, and monitored. Daily temperature logs, inspections, and customer ratings ensure quality.</li>
-                    </ul>
+                <div class="bg-white p-6 rounded-2xl shadow-lg">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://placehold.co/60x60/F97316/white?text=CR" class="rounded-full">
+                        <div>
+                            <h3 class="font-bold text-xl">Chef Rossi</h3>
+                            <p class="text-orange-600">Italian • Retired chef</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">“After 30 years in restaurants, I wanted to cook on my own terms. Open Garage handles all the paperwork – I just cook and connect with neighbors.”</p>
+                    <div class="mt-4 flex gap-2">
+                        <span class="badge"><i class="fas fa-star text-yellow-400"></i> 4.8</span>
+                        <span class="badge">180+ orders</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Kitchen of the Month (NEW) -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-8">🔥 Featured kitchen of the month</h2>
+            <div class="bg-orange-50 p-8 rounded-3xl shadow-lg flex flex-col md:flex-row gap-8 items-center">
+                <img src="https://placehold.co/200x200/F97316/white?text=LH" class="rounded-2xl">
+                <div>
+                    <h3 class="text-2xl font-bold">Little Hanoi</h3>
+                    <p class="text-orange-600 mb-2">Vietnamese • 0.8 miles away</p>
+                    <p class="text-gray-700 mb-4">Authentic pho, banh mi, and spring rolls made by Mrs. Lan, who brought her family recipes from Hanoi. Licensed and loved by the neighborhood.</p>
+                    <div class="flex gap-4">
+                        <button class="bg-orange-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-orange-700" onclick="simulateOrder('Little Hanoi', 'Vietnamese')">Order now →</button>
+                        <button class="border border-orange-600 text-orange-600 px-6 py-2 rounded-full font-semibold hover:bg-orange-50">View menu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison: Open Garage vs Traditional (NEW) -->
+    <section class="py-20 bg-white border-t border-gray-100">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-4">Open Garage vs. the rest</h2>
+            <p class="text-center text-gray-600 text-xl mb-12">See why we're different.</p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Open Garage -->
+                <div class="bg-orange-50 p-6 rounded-2xl shadow-lg">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-home text-orange-500"></i> Open Garage</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Licensed home kitchens</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> 10% platform fee</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> You know the cook</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Money stays local</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Daily safety logs</div>
+                    </div>
+                </div>
+                <!-- Restaurant -->
+                <div class="bg-gray-50 p-6 rounded-2xl shadow">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-store text-gray-500"></i> Restaurant</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2"><i class="fas fa-times-circle text-red-400"></i> High overhead</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-times-circle text-red-400"></i> Impersonal</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-times-circle text-red-400"></i> Money leaves community</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Regulated</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-times-circle text-red-400"></i> Often chain-owned</div>
+                    </div>
+                </div>
+                <!-- Delivery Apps -->
+                <div class="bg-gray-50 p-6 rounded-2xl shadow">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-motorcycle text-gray-500"></i> Delivery Apps</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2"><i class="fas fa-times-circle text-red-400"></i> 30%+ fees</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-times-circle text-red-400"></i> Anonymous kitchens</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-times-circle text-red-400"></i> Gig workers</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-times-circle text-red-400"></i> Data owned by corporations</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-times-circle text-red-400"></i> No community connection</div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Features -->
-    <section id="features" class="py-20 bg-white border-t border-gray-100">
+    <section id="features" class="py-20 gradient-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-4">Platform handles the hard stuff</h2>
-            <p class="text-center text-gray-600 text-xl mb-12">So cooks can focus on cooking, and customers enjoy peace of mind.</p>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-gray-50 p-6 rounded-2xl shadow hover:shadow-lg transition">
-                    <i class="fas fa-clipboard-check text-5xl text-orange-500 mb-4"></i>
-                    <h3 class="text-xl font-bold">Food safety compliance</h3>
-                    <p class="text-gray-600 mt-2">Digital logs, temperature checks, and regular inspections.</p>
+            <p class="text-center text-gray-600 text-xl mb-12">So you can focus on what matters.</p>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow text-center">
+                    <i class="fas fa-clipboard-check text-4xl text-orange-500 mb-3"></i>
+                    <h3 class="font-bold">Compliance</h3>
+                    <p class="text-sm text-gray-600">Digital logs, inspections, alerts.</p>
                 </div>
-                <div class="bg-gray-50 p-6 rounded-2xl shadow hover:shadow-lg transition">
-                    <i class="fas fa-calendar-alt text-5xl text-orange-500 mb-4"></i>
-                    <h3 class="text-xl font-bold">Scheduling</h3>
-                    <p class="text-gray-600 mt-2">Cooks set availability; customers book time slots.</p>
+                <div class="bg-white p-6 rounded-2xl shadow text-center">
+                    <i class="fas fa-calendar-alt text-4xl text-orange-500 mb-3"></i>
+                    <h3 class="font-bold">Scheduling</h3>
+                    <p class="text-sm text-gray-600">Set availability, book slots.</p>
                 </div>
-                <div class="bg-gray-50 p-6 rounded-2xl shadow hover:shadow-lg transition">
-                    <i class="fas fa-credit-card text-5xl text-orange-500 mb-4"></i>
-                    <h3 class="text-xl font-bold">Payment processing</h3>
-                    <p class="text-gray-600 mt-2">Secure payments, automated payouts, and platform fee handling.</p>
+                <div class="bg-white p-6 rounded-2xl shadow text-center">
+                    <i class="fas fa-credit-card text-4xl text-orange-500 mb-3"></i>
+                    <h3 class="font-bold">Payments</h3>
+                    <p class="text-sm text-gray-600">Secure, automated payouts.</p>
                 </div>
-                <div class="bg-gray-50 p-6 rounded-2xl shadow hover:shadow-lg transition">
-                    <i class="fas fa-truck text-5xl text-orange-500 mb-4"></i>
-                    <h3 class="text-xl font-bold">Distribution coordination</h3>
-                    <p class="text-gray-600 mt-2">Pickup/delivery logistics, order tracking, and notifications.</p>
+                <div class="bg-white p-6 rounded-2xl shadow text-center">
+                    <i class="fas fa-truck text-4xl text-orange-500 mb-3"></i>
+                    <h3 class="font-bold">Logistics</h3>
+                    <p class="text-sm text-gray-600">Pickup/delivery coordination.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Safety badges + Pricing -->
-    <section class="py-12 bg-white border-t border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-8">
-                <!-- Safety badges -->
-                <div class="flex flex-wrap justify-center gap-4">
-                    <div class="badge"><i class="fas fa-certificate text-orange-500"></i> Licensed</div>
-                    <div class="badge"><i class="fas fa-shield-alt text-orange-500"></i> Insured</div>
-                    <div class="badge"><i class="fas fa-thermometer-half text-orange-500"></i> Temp Checked</div>
-                </div>
-                <!-- Pricing card -->
-                <div class="bg-orange-50 p-6 rounded-2xl shadow-md flex items-center gap-4">
-                    <i class="fas fa-percent text-4xl text-orange-600"></i>
-                    <div>
-                        <p class="text-sm text-gray-600">Platform fee</p>
-                        <p class="text-3xl font-bold text-orange-600">10%</p>
-                        <p class="text-xs text-gray-500">Transparent, no hidden costs</p>
-                    </div>
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="badge"><i class="fas fa-certificate text-orange-500"></i> Licensed</div>
+                <div class="badge"><i class="fas fa-shield-alt text-orange-500"></i> Insured</div>
+                <div class="badge"><i class="fas fa-thermometer-half text-orange-500"></i> Temp Checked</div>
+            </div>
+            <div class="bg-orange-50 p-6 rounded-2xl shadow flex items-center gap-4">
+                <i class="fas fa-percent text-4xl text-orange-600"></i>
+                <div>
+                    <p class="text-sm text-gray-600">Platform fee</p>
+                    <p class="text-3xl font-bold text-orange-600">10%</p>
+                    <p class="text-xs text-gray-500">No hidden costs</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Live network stats + city map -->
+    <!-- Live stats + city map -->
+    <section class="py-20 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold mb-4">Growing every day</h2>
+                <div class="bg-white p-8 rounded-3xl shadow-lg">
+                    <i class="fas fa-utensils text-5xl text-orange-500 mb-4"></i>
+                    <p class="text-gray-600 mb-2">Meals cooked this week</p>
+                    <div id="live-counter" class="text-5xl font-bold text-orange-600">0</div>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-3xl font-bold mb-4 text-center">Your city, our kitchens</h2>
+                <div class="city-map relative">
+                    <i class="fas fa-map-pin city-pin" title="Maria's Kitchen"></i>
+                    <i class="fas fa-map-pin city-pin" title="Chef Rossi"></i>
+                    <i class="fas fa-map-pin city-pin" title="Taste of India"></i>
+                    <i class="fas fa-map-pin city-pin" title="Little Hanoi"></i>
+                    <i class="fas fa-map-pin city-pin" title="Baker's Dozen"></i>
+                    <i class="fas fa-map-pin city-pin" title="Sofia's Kitchen"></i>
+                    <i class="fas fa-map-pin city-pin" title="El Sabor"></i>
+                    <i class="fas fa-map-pin city-pin" title="Dragon Wok"></i>
+                </div>
+                <p class="text-sm text-gray-600 mt-4 text-center">Hover over pins to see kitchen names. Each is a licensed home kitchen in your neighborhood.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
     <section class="py-20 gradient-bg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <!-- Live stats -->
-                <div>
-                    <h2 class="text-3xl font-bold mb-4">Growing every day</h2>
-                    <div class="bg-white p-8 rounded-3xl shadow-lg text-center">
-                        <i class="fas fa-utensils text-5xl text-orange-500 mb-4"></i>
-                        <p class="text-gray-600 mb-2">Meals cooked this week</p>
-                        <div id="live-counter" class="text-5xl font-bold text-orange-600">0</div>
-                        <p class="text-sm text-gray-400 mt-4">+2 every second (live demo)</p>
-                    </div>
-                </div>
-                <!-- City map with pins -->
-                <div>
-                    <h2 class="text-3xl font-bold mb-4">Your city, our kitchens</h2>
-                    <div class="city-map relative">
-                        <i class="fas fa-map-pin city-pin"></i>
-                        <i class="fas fa-map-pin city-pin"></i>
-                        <i class="fas fa-map-pin city-pin"></i>
-                        <i class="fas fa-map-pin city-pin"></i>
-                        <i class="fas fa-map-pin city-pin"></i>
-                        <i class="fas fa-map-pin city-pin"></i>
-                        <i class="fas fa-map-pin city-pin"></i>
-                        <i class="fas fa-map-pin city-pin"></i>
-                    </div>
-                    <p class="text-sm text-gray-600 mt-4 text-center">Each pin is a licensed home kitchen in your neighborhood.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Accordion -->
-    <section class="py-20 bg-white">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-12">Frequently asked questions</h2>
             <div class="space-y-4">
-                <!-- FAQ 1 -->
-                <div class="border border-gray-200 rounded-2xl p-4">
+                <div class="bg-white rounded-2xl p-4">
                     <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-lg">How do I get licensed as a cook?</span>
-                        <i class="fas fa-chevron-down text-orange-500 transition-transform duration-300"></i>
+                        <span class="font-semibold">How do I get licensed as a cook?</span>
+                        <i class="fas fa-chevron-down text-orange-500"></i>
                     </div>
-                    <div class="faq-answer mt-2 text-gray-600">
-                        We guide you through the process: upload your ID, food handler's permit, and kitchen photos. We'll schedule a virtual inspection and help you meet local regulations.
-                    </div>
+                    <div class="faq-answer mt-2 text-gray-600">We guide you through the process: upload your ID, food handler's permit, and kitchen photos. We'll schedule a virtual inspection and help you meet local regulations.</div>
                 </div>
-                <!-- FAQ 2 -->
-                <div class="border border-gray-200 rounded-2xl p-4">
+                <div class="bg-white rounded-2xl p-4">
                     <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-lg">What are the fees for cooks?</span>
-                        <i class="fas fa-chevron-down text-orange-500 transition-transform duration-300"></i>
+                        <span class="font-semibold">What are the fees for cooks?</span>
+                        <i class="fas fa-chevron-down text-orange-500"></i>
                     </div>
-                    <div class="faq-answer mt-2 text-gray-600">
-                        We take a 10% platform fee on each order. There are no listing fees or monthly charges. You keep the rest.
-                    </div>
+                    <div class="faq-answer mt-2 text-gray-600">We take a 10% platform fee on each order. No listing fees or monthly charges.</div>
                 </div>
-                <!-- FAQ 3 -->
-                <div class="border border-gray-200 rounded-2xl p-4">
+                <div class="bg-white rounded-2xl p-4">
                     <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-lg">Is my food safe?</span>
-                        <i class="fas fa-chevron-down text-orange-500 transition-transform duration-300"></i>
+                        <span class="font-semibold">Is my food safe?</span>
+                        <i class="fas fa-chevron-down text-orange-500"></i>
                     </div>
-                    <div class="faq-answer mt-2 text-gray-600">
-                        Every kitchen is licensed and inspected. Cooks submit daily temperature and cleaning logs. We monitor compliance continuously.
-                    </div>
+                    <div class="faq-answer mt-2 text-gray-600">Every kitchen is licensed and inspected. Cooks submit daily temperature and cleaning logs. We monitor compliance continuously.</div>
                 </div>
-                <!-- FAQ 4 -->
-                <div class="border border-gray-200 rounded-2xl p-4">
+                <div class="bg-white rounded-2xl p-4">
                     <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-lg">How do I get my food?</span>
-                        <i class="fas fa-chevron-down text-orange-500 transition-transform duration-300"></i>
+                        <span class="font-semibold">Can I order delivery?</span>
+                        <i class="fas fa-chevron-down text-orange-500"></i>
                     </div>
-                    <div class="faq-answer mt-2 text-gray-600">
-                        You can choose pickup or delivery (if the cook offers it). We'll send you real-time updates and the cook's contact info.
+                    <div class="faq-answer mt-2 text-gray-600">Yes, if the cook offers delivery. You'll see delivery options at checkout. Pickup is always available.</div>
+                </div>
+                <div class="bg-white rounded-2xl p-4">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                        <span class="font-semibold">What if something goes wrong with my order?</span>
+                        <i class="fas fa-chevron-down text-orange-500"></i>
                     </div>
+                    <div class="faq-answer mt-2 text-gray-600">We have a dispute resolution team. Your payment is held until you confirm receipt, so you're protected.</div>
                 </div>
             </div>
         </div>
@@ -770,53 +688,20 @@
             <h2 class="text-4xl font-bold mb-4">Ready to join the movement?</h2>
             <p class="text-xl mb-8">Whether you want to cook or eat, Open Garage brings homemade food to your neighborhood.</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button id="signup-cook-footer" class="bg-white text-orange-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition">Sign up as a cook</button>
-                <button id="find-food-footer" class="bg-orange-700 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-orange-800 transition">Find food near me</button>
+                <button id="signup-cook-footer" class="bg-white text-orange-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100">Sign up as a cook</button>
+                <button id="find-food-footer" class="bg-orange-700 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-orange-800">Find food near me</button>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-300 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-4 gap-8">
-            <div>
-                <div class="flex items-center space-x-2 text-white mb-4">
-                    <span class="text-3xl">🔥</span>
-                    <span class="font-bold text-xl">Open Garage</span>
-                </div>
-                <p class="text-sm">Decentralized food infrastructure. Home kitchens, local flavors.</p>
-            </div>
-            <div>
-                <h4 class="text-white font-semibold mb-4">For cooks</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-white transition">How to start</a></li>
-                    <li><a href="#" class="hover:text-white transition">Requirements</a></li>
-                    <li><a href="#" class="hover:text-white transition">Pricing</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-white font-semibold mb-4">For customers</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-white transition">Find kitchens</a></li>
-                    <li><a href="#" class="hover:text-white transition">How ordering works</a></li>
-                    <li><a href="#" class="hover:text-white transition">FAQs</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-white font-semibold mb-4">Company</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-white transition">About</a></li>
-                    <li><a href="#" class="hover:text-white transition">Contact</a></li>
-                    <li><a href="#" class="hover:text-white transition">Press</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
             &copy; 2025 Open Garage. Demo for concept only.
         </div>
     </footer>
 
-    <!-- Tour overlay (hidden by default) -->
+    <!-- Tour overlay -->
     <div id="tour-overlay" style="display: none;">
         <span id="tour-message"></span>
         <button id="tour-next" class="tour-btn">Next</button>
@@ -825,23 +710,17 @@
 
     <!-- JavaScript -->
     <script>
-        // Tab switching function
         function switchTab(role) {
-            const cookContent = document.getElementById('content-cook');
-            const customerContent = document.getElementById('content-customer');
+            document.getElementById('content-cook').classList.toggle('hidden', role !== 'cook');
+            document.getElementById('content-customer').classList.toggle('hidden', role !== 'customer');
             const tabCook = document.getElementById('tab-cook');
             const tabCustomer = document.getElementById('tab-customer');
-
             if (role === 'cook') {
-                cookContent.classList.remove('hidden');
-                customerContent.classList.add('hidden');
                 tabCook.classList.add('bg-orange-600', 'text-white');
                 tabCook.classList.remove('bg-white', 'text-orange-600');
                 tabCustomer.classList.remove('bg-orange-600', 'text-white');
                 tabCustomer.classList.add('bg-white', 'text-orange-600');
             } else {
-                cookContent.classList.add('hidden');
-                customerContent.classList.remove('hidden');
                 tabCustomer.classList.add('bg-orange-600', 'text-white');
                 tabCustomer.classList.remove('bg-white', 'text-orange-600');
                 tabCook.classList.remove('bg-orange-600', 'text-white');
@@ -849,35 +728,17 @@
             }
         }
 
-        // Helper: scroll to how-it-works and switch tab
         function scrollToHowItWorksAndSwitch(role) {
             document.getElementById('how-it-works').scrollIntoView({ behavior: 'smooth' });
             switchTab(role);
         }
 
-        // Simulate order (for demo)
         function simulateOrder(kitchenName, cuisine) {
-            const msgDiv = document.getElementById('order-message');
-            msgDiv.innerHTML = `✅ Order placed at ${kitchenName} (${cuisine})! The cook will start preparing. (Demo)`;
-            msgDiv.classList.add('text-green-600', 'font-semibold', 'animate-pulse');
-            setTimeout(() => {
-                msgDiv.classList.remove('animate-pulse');
-            }, 1000);
+            const msg = document.getElementById('order-message');
+            msg.innerHTML = `✅ Order placed at ${kitchenName} (${cuisine})! (Demo)`;
+            msg.classList.add('text-green-600', 'font-semibold');
         }
 
-        // Surprise me function
-        document.addEventListener('DOMContentLoaded', function() {
-            const surpriseBtn = document.getElementById('surprise-btn');
-            if (surpriseBtn) {
-                surpriseBtn.addEventListener('click', function() {
-                    const kitchens = ["Maria's Kitchen", "Chef Rossi", "Taste of India", "Sofia's Kitchen", "Little Vietnam", "Baker's Dozen"];
-                    const random = kitchens[Math.floor(Math.random() * kitchens.length)];
-                    alert(`🎲 How about trying ${random}? (Demo)`);
-                });
-            }
-        });
-
-        // Animate comparison bars on page load
         window.addEventListener('load', function() {
             document.getElementById('fill1').style.width = '100%';
             document.getElementById('fill2').style.width = '100%';
@@ -885,7 +746,7 @@
             document.getElementById('meals2').innerText = '1,000 meals';
         });
 
-        // Live counter
+        // Live counter with counting animation
         let count = 12450;
         const counterEl = document.getElementById('live-counter');
         setInterval(() => {
@@ -907,22 +768,32 @@
             }
         };
 
-        // Tour functionality
+        // Testimonial carousel
+        const testimonials = [
+            { text: "“I used to cook for my family only. Now I earn $500 a week doing what I love.” – Maria, cook", author: "Maria" },
+            { text: "“I love knowing exactly who cooked my meal. It’s like having a personal chef next door.” – Alex, customer", author: "Alex" },
+            { text: "“Open Garage helped me turn my hobby into a real business. The best decision I ever made.” – Chef Rossi", author: "Chef Rossi" }
+        ];
+        let testimonialIndex = 0;
+        setInterval(() => {
+            testimonialIndex = (testimonialIndex + 1) % testimonials.length;
+            document.getElementById('testimonial').innerText = testimonials[testimonialIndex].text;
+        }, 5000);
+
+        // Tour
         const tourOverlay = document.getElementById('tour-overlay');
         const tourMessage = document.getElementById('tour-message');
         const tourNext = document.getElementById('tour-next');
         const tourSkip = document.getElementById('tour-skip');
-
         const tourSteps = [
-            { element: '#comparison', message: 'We replace one big kitchen with 100 micro-kitchens – same output, more personal.' },
-            { element: '#how-it-works', message: 'Two views: one for cooks, one for customers. Click the tabs to explore.' },
-            { element: '#cook-dashboard', message: 'Cooks get a simple dashboard to manage orders and compliance.', tab: 'cook' },
-            { element: '#customer-browse', message: 'Customers can browse nearby kitchens and order directly.', tab: 'customer' },
-            { element: '#discovery', message: 'Smarter discovery: filters, recommendations, and recurring orders.' },
-            { element: '#logistics', message: 'Operational logistics: delivery zones, real-time tracking, and contactless lockers.' },
-            { element: '#why-us', message: 'We solve real problems: licensing, trust, and community.' }
+            { element: '#comparison', message: 'We replace one big kitchen with 100 micro-kitchens.' },
+            { element: '#how-it-works', message: 'Two views: one for cooks, one for customers.' },
+            { element: '#cook-dashboard', message: 'Cooks manage orders easily.', tab: 'cook' },
+            { element: '#customer-browse', message: 'Customers browse nearby kitchens.', tab: 'customer' },
+            { element: '#why-us', message: 'We solve real problems for everyone.' },
+            { element: '#success', message: 'Real people are already succeeding.' },
+            { element: '.comparison-row', message: 'See how we compare to restaurants and delivery apps.' }
         ];
-
         let currentStep = 0;
 
         function startTour() {
@@ -932,35 +803,19 @@
         }
 
         function showStep() {
-            if (currentStep >= tourSteps.length) {
-                endTour();
-                return;
-            }
+            if (currentStep >= tourSteps.length) { endTour(); return; }
             const step = tourSteps[currentStep];
-            // Remove previous highlight
             document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
-            // Switch tab if needed
-            if (step.tab) {
-                switchTab(step.tab);
-            }
-            // Highlight element
+            if (step.tab) switchTab(step.tab);
             const target = document.querySelector(step.element);
             if (target) {
                 target.classList.add('tour-highlight');
                 target.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 tourMessage.innerText = step.message;
-            } else {
-                // Skip if element not found
-                currentStep++;
-                showStep();
-            }
+            } else { currentStep++; showStep(); }
         }
 
-        function nextStep() {
-            currentStep++;
-            showStep();
-        }
-
+        function nextStep() { currentStep++; showStep(); }
         function endTour() {
             tourOverlay.style.display = 'none';
             document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
@@ -969,61 +824,18 @@
         tourNext.addEventListener('click', nextStep);
         tourSkip.addEventListener('click', endTour);
 
-        // Attach other event listeners
+        // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
-            // Tour button
-            document.getElementById('tour-btn').addEventListener('click', function(e) {
-                e.preventDefault();
-                startTour();
-            });
-
-            // Hero buttons
-            document.getElementById('cook-btn').addEventListener('click', function() {
-                scrollToHowItWorksAndSwitch('cook');
-            });
-            document.getElementById('eat-btn').addEventListener('click', function() {
-                scrollToHowItWorksAndSwitch('customer');
-            });
-
-            // Buttons inside tabs
-            document.getElementById('become-cook-btn').addEventListener('click', function() {
-                scrollToHowItWorksAndSwitch('cook');
-            });
-            document.getElementById('find-kitchens-btn').addEventListener('click', function() {
-                scrollToHowItWorksAndSwitch('customer');
-            });
-
-            // Footer CTA buttons
-            document.getElementById('signup-cook-footer').addEventListener('click', function() {
-                scrollToHowItWorksAndSwitch('cook');
-            });
-            document.getElementById('find-food-footer').addEventListener('click', function() {
-                scrollToHowItWorksAndSwitch('customer');
-            });
-
-            // Nav buttons (demo alerts)
-            document.getElementById('get-started-btn').addEventListener('click', function() {
-                alert('🚀 Demo: This would start the onboarding flow.');
-            });
-
-            // Nav links for "For cooks" and "For customers"
-            document.getElementById('nav-for-cooks').addEventListener('click', function(e) {
-                e.preventDefault();
-                scrollToHowItWorksAndSwitch('cook');
-            });
-            document.getElementById('nav-for-customers').addEventListener('click', function(e) {
-                e.preventDefault();
-                scrollToHowItWorksAndSwitch('customer');
-            });
-
-            // Optional: make footer links non-clickable for demo (prevent jump)
-            const footerLinks = document.querySelectorAll('footer a');
-            footerLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    alert('📄 Demo: This is a placeholder link.');
-                });
-            });
+            document.getElementById('tour-btn').addEventListener('click', (e) => { e.preventDefault(); startTour(); });
+            document.getElementById('cook-btn').addEventListener('click', () => scrollToHowItWorksAndSwitch('cook'));
+            document.getElementById('eat-btn').addEventListener('click', () => scrollToHowItWorksAndSwitch('customer'));
+            document.getElementById('become-cook-btn').addEventListener('click', () => scrollToHowItWorksAndSwitch('cook'));
+            document.getElementById('find-kitchens-btn').addEventListener('click', () => scrollToHowItWorksAndSwitch('customer'));
+            document.getElementById('signup-cook-footer').addEventListener('click', () => scrollToHowItWorksAndSwitch('cook'));
+            document.getElementById('find-food-footer').addEventListener('click', () => scrollToHowItWorksAndSwitch('customer'));
+            document.getElementById('get-started-btn').addEventListener('click', () => alert('🚀 Demo: This would start the onboarding flow.'));
+            document.getElementById('nav-for-cooks').addEventListener('click', (e) => { e.preventDefault(); scrollToHowItWorksAndSwitch('cook'); });
+            document.getElementById('nav-for-customers').addEventListener('click', (e) => { e.preventDefault(); scrollToHowItWorksAndSwitch('customer'); });
         });
     </script>
 </body>
