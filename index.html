@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Open Garage – Decentralized Micro Kitchens</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Base styles */
         html { scroll-behavior: smooth; }
         .tab-content { transition: opacity 0.2s ease; }
         .mockup-card { 
@@ -139,6 +140,7 @@
             filter: drop-shadow(0 4px 2px rgba(0,0,0,0.2));
             transform: translate(-50%, -100%);
             transition: transform 0.2s;
+            cursor: pointer;
         }
         .city-pin:hover {
             transform: translate(-50%, -120%) scale(1.2);
@@ -190,25 +192,68 @@
             gap: 0.75rem;
             margin-bottom: 0.75rem;
         }
-        /* Comparison table */
-        .comparison-row {
+        /* Quiz modal */
+        #quiz-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
             display: flex;
-            justify-content: space-between;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid #e5e7eb;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        .comparison-row:last-child {
-            border-bottom: none;
+        #quiz-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .quiz-content {
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+        }
+        /* Social proof toast */
+        #social-toast {
+            position: fixed;
+            bottom: 80px; left: 20px;
+            background: white;
+            border-left: 4px solid #f97316;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border-radius: 1rem;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1500;
+            transition: transform 0.3s ease;
+            transform: translateX(-120%);
+        }
+        #social-toast.show {
+            transform: translateX(0);
+        }
+        /* Focus styles for accessibility */
+        *:focus-visible {
+            outline: 3px solid #f97316;
+            outline-offset: 2px;
+        }
+        /* Mobile adjustments */
+        @media (max-width: 640px) {
+            h1 { font-size: 2.5rem; }
+            .hero-buttons { flex-direction: column; }
         }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans antialiased">
 
     <!-- Navigation -->
-    <nav class="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-10">
+    <nav class="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-10" aria-label="Main navigation">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                <span class="text-3xl">🔥</span>
+                <span class="text-3xl" aria-hidden="true">🔥</span>
                 <span class="font-bold text-xl text-orange-600">Open Garage</span>
             </div>
             <div class="space-x-6 text-sm font-medium hidden md:flex">
@@ -220,20 +265,47 @@
                 <a href="#" id="nav-for-customers" class="hover:text-orange-600 transition">For customers</a>
             </div>
             <div class="space-x-3">
-                <button id="tour-btn" class="border border-orange-600 text-orange-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-50 transition animate-pulse">🎬 Take a tour</button>
-                <button id="get-started-btn" class="bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-700 transition">Get started</button>
+                <button id="tour-btn" class="border border-orange-600 text-orange-600 px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-50 transition animate-pulse" aria-label="Start guided tour">🎬 Take a tour</button>
+                <button id="quiz-trigger" class="bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-700 transition" aria-label="Find your role">🔍 Find my role</button>
             </div>
         </div>
     </nav>
 
-    <!-- Hero -->
+    <!-- Quiz Modal -->
+    <div id="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-title">
+        <div class="quiz-content">
+            <h3 id="quiz-title" class="text-2xl font-bold mb-4">Let's find your path</h3>
+            <div class="space-y-4">
+                <p class="text-gray-700">Do you love to cook and want to earn from it?</p>
+                <div class="flex gap-2">
+                    <button class="quiz-option bg-orange-100 px-4 py-2 rounded-full" data-role="cook">Yes, I love cooking</button>
+                    <button class="quiz-option bg-gray-100 px-4 py-2 rounded-full" data-role="customer">No, I want to eat</button>
+                </div>
+                <p class="text-gray-700 mt-2">Are you looking for extra income?</p>
+                <div class="flex gap-2">
+                    <button class="quiz-option bg-orange-100 px-4 py-2 rounded-full" data-role="cook">Yes</button>
+                    <button class="quiz-option bg-gray-100 px-4 py-2 rounded-full" data-role="customer">Not really</button>
+                </div>
+                <button id="quiz-submit" class="mt-4 bg-orange-600 text-white px-6 py-2 rounded-full w-full">Show me the right view</button>
+                <button id="quiz-close" class="text-sm text-gray-500 underline mt-2">Skip</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Social Proof Toast -->
+    <div id="social-toast" aria-live="polite" aria-atomic="true">
+        <i class="fas fa-user-circle text-orange-500 text-xl"></i>
+        <span id="toast-message">Maria just ordered from Chef Rossi</span>
+    </div>
+
+    <!-- Hero Section (A/B tested) -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 text-center">
-        <p class="text-orange-600 font-semibold tracking-wide uppercase mb-3">Stop wondering if it's safe or legal. We've got you covered.</p>
-        <h1 class="text-5xl md:text-6xl font-extrabold leading-tight">
+        <p class="text-orange-600 font-semibold tracking-wide uppercase mb-3" id="hero-tagline">Stop wondering if it's safe or legal. We've got you covered.</p>
+        <h1 class="text-5xl md:text-6xl font-extrabold leading-tight" id="hero-headline">
             <span class="bg-orange-100 text-orange-800 px-4 py-2 rounded-2xl inline-block mb-4">🔥 1️⃣ “Open Garage”</span><br>
             Turn your home kitchen into a legal, income‑generating business.
         </h1>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto mt-6">
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto mt-6" id="hero-subhead">
             No restaurant overhead. No confusing regulations. No corporate middlemen. Just you, your kitchen, and your neighbors.
         </p>
         
@@ -254,7 +326,7 @@
             <p class="text-xs text-gray-400 mt-3">Same total output, but distributed, personal, and local.</p>
         </div>
 
-        <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+        <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4 hero-buttons">
             <button id="cook-btn" class="bg-orange-600 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-orange-700 flex items-center justify-center gap-2 transition">
                 <i class="fas fa-utensils"></i> I want to cook
             </button>
@@ -270,17 +342,17 @@
         <div class="bg-white rounded-3xl shadow-xl p-8">
             <p class="text-center text-gray-600 mb-6">Click any kitchen below to simulate placing an order. (Demo only)</p>
             <div class="grid md:grid-cols-3 gap-4">
-                <div class="kitchen-card-mock p-4" onclick="simulateOrder('Maria’s Kitchen', 'Mexican')">
-                    <i class="fas fa-utensils text-orange-400 text-2xl"></i>
+                <div class="kitchen-card-mock p-4" onclick="simulateOrder('Maria’s Kitchen', 'Mexican')" tabindex="0" role="button" aria-label="Order from Maria’s Kitchen">
+                    <i class="fas fa-utensils text-orange-400 text-2xl" aria-hidden="true"></i>
                     <div class="flex-1">
                         <div class="flex justify-between">
                             <span class="font-bold">Maria’s Kitchen</span>
-                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">★ 4.9</span>
+                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded" aria-label="Rating 4.9 out of 5">★ 4.9</span>
                         </div>
                         <p class="text-sm text-gray-500">Mexican • 0.3 miles • $12 avg</p>
                     </div>
                 </div>
-                <div class="kitchen-card-mock p-4" onclick="simulateOrder('Chef Rossi', 'Italian')">
+                <div class="kitchen-card-mock p-4" onclick="simulateOrder('Chef Rossi', 'Italian')" tabindex="0" role="button" aria-label="Order from Chef Rossi">
                     <i class="fas fa-utensils text-orange-400 text-2xl"></i>
                     <div class="flex-1">
                         <div class="flex justify-between">
@@ -290,7 +362,7 @@
                         <p class="text-sm text-gray-500">Italian • 0.7 miles • $18 avg</p>
                     </div>
                 </div>
-                <div class="kitchen-card-mock p-4" onclick="simulateOrder('Taste of India', 'Indian')">
+                <div class="kitchen-card-mock p-4" onclick="simulateOrder('Taste of India', 'Indian')" tabindex="0" role="button" aria-label="Order from Taste of India">
                     <i class="fas fa-utensils text-orange-400 text-2xl"></i>
                     <div class="flex-1">
                         <div class="flex justify-between">
@@ -301,17 +373,17 @@
                     </div>
                 </div>
             </div>
-            <div id="order-message" class="mt-6 text-center text-gray-700 text-lg"></div>
+            <div id="order-message" class="mt-6 text-center text-gray-700 text-lg" aria-live="polite"></div>
         </div>
     </section>
 
-    <!-- How it works (tabs) with step icons -->
+    <!-- How it works (tabs) with gamification -->
     <section id="how-it-works" class="gradient-bg py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-4">How it works – the simple way</h2>
             <div class="flex justify-center mb-8">
-                <button id="tab-cook" class="tab-button px-6 py-3 text-lg font-semibold rounded-l-full border-2 border-orange-600 bg-orange-600 text-white" onclick="switchTab('cook')">For Cooks</button>
-                <button id="tab-customer" class="tab-button px-6 py-3 text-lg font-semibold rounded-r-full border-2 border-orange-600 bg-white text-orange-600" onclick="switchTab('customer')">For Customers</button>
+                <button id="tab-cook" class="tab-button px-6 py-3 text-lg font-semibold rounded-l-full border-2 border-orange-600 bg-orange-600 text-white" onclick="switchTab('cook')" aria-label="Switch to cook view">For Cooks</button>
+                <button id="tab-customer" class="tab-button px-6 py-3 text-lg font-semibold rounded-r-full border-2 border-orange-600 bg-white text-orange-600" onclick="switchTab('customer')" aria-label="Switch to customer view">For Customers</button>
             </div>
 
             <!-- Cook content -->
@@ -344,6 +416,17 @@
                         <div class="flex justify-between bg-orange-50 p-2 rounded">Orders today <span class="font-bold">8</span></div>
                         <div><span class="text-sm font-medium">Upcoming</span> #234 Pasta (15 min) • #235 Tacos (preparing)</div>
                         <div><span class="text-sm font-medium">Menu</span> Pasta, Tacos, Salad, Cake</div>
+                        <!-- Gamification badges -->
+                        <div class="border-t pt-2 mt-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium">Cook Level</span>
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs"><i class="fas fa-star text-yellow-500"></i> Rising Star</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: 65%"></div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">65 orders to next level: Community Favorite</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -375,10 +458,10 @@
                 <div class="mockup-card p-6" id="customer-browse">
                     <div class="flex items-center gap-2 mb-3"><i class="fas fa-map-marked-alt text-orange-500"></i><span class="font-semibold">Nearby kitchens</span></div>
                     <div class="space-y-2">
-                        <div class="kitchen-card-mock p-2" onclick="simulateOrder('Maria’s Kitchen', 'Mexican')">
+                        <div class="kitchen-card-mock p-2" onclick="simulateOrder('Maria’s Kitchen', 'Mexican')" tabindex="0" role="button">
                             <i class="fas fa-utensils text-orange-400"></i> Maria's Kitchen ★4.9 • 0.3 mi
                         </div>
-                        <div class="kitchen-card-mock p-2" onclick="simulateOrder('Chef Rossi', 'Italian')">
+                        <div class="kitchen-card-mock p-2" onclick="simulateOrder('Chef Rossi', 'Italian')" tabindex="0" role="button">
                             <i class="fas fa-utensils text-orange-400"></i> Chef Rossi ★4.8 • 0.7 mi
                         </div>
                     </div>
@@ -395,7 +478,7 @@
         </div>
     </section>
 
-    <!-- Why Open Garage – Direct benefits (enhanced) -->
+    <!-- Why Open Garage -->
     <section id="why-us" class="py-20 bg-white border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-4">Why use Open Garage?</h2>
@@ -461,7 +544,20 @@
         </div>
     </section>
 
-    <!-- Success Stories (NEW) -->
+    <!-- Partnership Showcase -->
+    <section class="py-12 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h3 class="text-2xl font-bold mb-6">Trusted by local suppliers</h3>
+            <div class="flex flex-wrap justify-center gap-8 items-center">
+                <img src="https://placehold.co/120x40/F97316/white?text=Miller's+Farm" alt="Miller's Farm" class="h-10 w-auto opacity-70 grayscale hover:grayscale-0 transition" loading="lazy">
+                <img src="https://placehold.co/120x40/F97316/white?text=Green+Valley" alt="Green Valley" class="h-10 w-auto opacity-70 grayscale hover:grayscale-0 transition" loading="lazy">
+                <img src="https://placehold.co/120x40/F97316/white?text=Local+Harvest" alt="Local Harvest" class="h-10 w-auto opacity-70 grayscale hover:grayscale-0 transition" loading="lazy">
+                <img src="https://placehold.co/120x40/F97316/white?text=City+Bakery" alt="City Bakery" class="h-10 w-auto opacity-70 grayscale hover:grayscale-0 transition" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
     <section id="success" class="py-20 gradient-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-4">Success stories</h2>
@@ -469,7 +565,7 @@
             <div class="grid md:grid-cols-2 gap-8">
                 <div class="bg-white p-6 rounded-2xl shadow-lg">
                     <div class="flex items-center gap-4 mb-4">
-                        <img src="https://placehold.co/60x60/F97316/white?text=MC" class="rounded-full">
+                        <img src="https://placehold.co/60x60/F97316/white?text=MC" class="rounded-full" loading="lazy">
                         <div>
                             <h3 class="font-bold text-xl">Maria's Kitchen</h3>
                             <p class="text-orange-600">Mexican • Cook since 2023</p>
@@ -483,7 +579,7 @@
                 </div>
                 <div class="bg-white p-6 rounded-2xl shadow-lg">
                     <div class="flex items-center gap-4 mb-4">
-                        <img src="https://placehold.co/60x60/F97316/white?text=CR" class="rounded-full">
+                        <img src="https://placehold.co/60x60/F97316/white?text=CR" class="rounded-full" loading="lazy">
                         <div>
                             <h3 class="font-bold text-xl">Chef Rossi</h3>
                             <p class="text-orange-600">Italian • Retired chef</p>
@@ -499,12 +595,12 @@
         </div>
     </section>
 
-    <!-- Featured Kitchen of the Month (NEW) -->
+    <!-- Featured Kitchen of the Month -->
     <section class="py-12 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-bold text-center mb-8">🔥 Featured kitchen of the month</h2>
             <div class="bg-orange-50 p-8 rounded-3xl shadow-lg flex flex-col md:flex-row gap-8 items-center">
-                <img src="https://placehold.co/200x200/F97316/white?text=LH" class="rounded-2xl">
+                <img src="https://placehold.co/200x200/F97316/white?text=LH" class="rounded-2xl" loading="lazy">
                 <div>
                     <h3 class="text-2xl font-bold">Little Hanoi</h3>
                     <p class="text-orange-600 mb-2">Vietnamese • 0.8 miles away</p>
@@ -518,13 +614,12 @@
         </div>
     </section>
 
-    <!-- Comparison: Open Garage vs Traditional (NEW) -->
+    <!-- Comparison Table -->
     <section class="py-20 bg-white border-t border-gray-100">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-4">Open Garage vs. the rest</h2>
             <p class="text-center text-gray-600 text-xl mb-12">See why we're different.</p>
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Open Garage -->
                 <div class="bg-orange-50 p-6 rounded-2xl shadow-lg">
                     <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-home text-orange-500"></i> Open Garage</h3>
                     <div class="space-y-3">
@@ -535,7 +630,6 @@
                         <div class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Daily safety logs</div>
                     </div>
                 </div>
-                <!-- Restaurant -->
                 <div class="bg-gray-50 p-6 rounded-2xl shadow">
                     <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-store text-gray-500"></i> Restaurant</h3>
                     <div class="space-y-3">
@@ -546,7 +640,6 @@
                         <div class="flex items-center gap-2"><i class="fas fa-times-circle text-red-400"></i> Often chain-owned</div>
                     </div>
                 </div>
-                <!-- Delivery Apps -->
                 <div class="bg-gray-50 p-6 rounded-2xl shadow">
                     <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-motorcycle text-gray-500"></i> Delivery Apps</h3>
                     <div class="space-y-3">
@@ -610,7 +703,7 @@
         </div>
     </section>
 
-    <!-- Live stats + city map -->
+    <!-- Live stats + Interactive Map -->
     <section class="py-20 bg-white border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
             <div class="text-center">
@@ -623,17 +716,29 @@
             </div>
             <div>
                 <h2 class="text-3xl font-bold mb-4 text-center">Your city, our kitchens</h2>
-                <div class="city-map relative">
-                    <i class="fas fa-map-pin city-pin" title="Maria's Kitchen"></i>
-                    <i class="fas fa-map-pin city-pin" title="Chef Rossi"></i>
-                    <i class="fas fa-map-pin city-pin" title="Taste of India"></i>
-                    <i class="fas fa-map-pin city-pin" title="Little Hanoi"></i>
-                    <i class="fas fa-map-pin city-pin" title="Baker's Dozen"></i>
-                    <i class="fas fa-map-pin city-pin" title="Sofia's Kitchen"></i>
-                    <i class="fas fa-map-pin city-pin" title="El Sabor"></i>
-                    <i class="fas fa-map-pin city-pin" title="Dragon Wok"></i>
+                <div class="city-map relative" id="city-map">
+                    <i class="fas fa-map-pin city-pin" data-kitchen="Maria's Kitchen" data-cuisine="Mexican" data-dist="0.3"></i>
+                    <i class="fas fa-map-pin city-pin" data-kitchen="Chef Rossi" data-cuisine="Italian" data-dist="0.7"></i>
+                    <i class="fas fa-map-pin city-pin" data-kitchen="Taste of India" data-cuisine="Indian" data-dist="1.2"></i>
+                    <i class="fas fa-map-pin city-pin" data-kitchen="Little Hanoi" data-cuisine="Vietnamese" data-dist="0.8"></i>
+                    <i class="fas fa-map-pin city-pin" data-kitchen="Baker's Dozen" data-cuisine="Bakery" data-dist="0.2"></i>
+                    <i class="fas fa-map-pin city-pin" data-kitchen="Sofia's Kitchen" data-cuisine="Greek" data-dist="0.5"></i>
+                    <i class="fas fa-map-pin city-pin" data-kitchen="El Sabor" data-cuisine="Spanish" data-dist="1.0"></i>
+                    <i class="fas fa-map-pin city-pin" data-kitchen="Dragon Wok" data-cuisine="Chinese" data-dist="0.6"></i>
                 </div>
-                <p class="text-sm text-gray-600 mt-4 text-center">Hover over pins to see kitchen names. Each is a licensed home kitchen in your neighborhood.</p>
+                <p class="text-sm text-gray-600 mt-4 text-center">Click a pin to see kitchen details.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile App Mockup (Future) -->
+    <section class="py-20 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">Coming soon: Mobile app</h2>
+            <p class="text-gray-600 mb-8">Order on the go and manage your kitchen from anywhere.</p>
+            <div class="flex justify-center gap-4">
+                <img src="https://placehold.co/180x60/000000/white?text=App+Store" alt="App Store" class="h-12" loading="lazy">
+                <img src="https://placehold.co/180x60/000000/white?text=Google+Play" alt="Google Play" class="h-12" loading="lazy">
             </div>
         </div>
     </section>
@@ -644,41 +749,55 @@
             <h2 class="text-4xl font-bold text-center mb-12">Frequently asked questions</h2>
             <div class="space-y-4">
                 <div class="bg-white rounded-2xl p-4">
-                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)" tabindex="0" role="button" aria-expanded="false">
                         <span class="font-semibold">How do I get licensed as a cook?</span>
                         <i class="fas fa-chevron-down text-orange-500"></i>
                     </div>
                     <div class="faq-answer mt-2 text-gray-600">We guide you through the process: upload your ID, food handler's permit, and kitchen photos. We'll schedule a virtual inspection and help you meet local regulations.</div>
                 </div>
                 <div class="bg-white rounded-2xl p-4">
-                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)" tabindex="0" role="button">
                         <span class="font-semibold">What are the fees for cooks?</span>
                         <i class="fas fa-chevron-down text-orange-500"></i>
                     </div>
                     <div class="faq-answer mt-2 text-gray-600">We take a 10% platform fee on each order. No listing fees or monthly charges.</div>
                 </div>
                 <div class="bg-white rounded-2xl p-4">
-                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)" tabindex="0" role="button">
                         <span class="font-semibold">Is my food safe?</span>
                         <i class="fas fa-chevron-down text-orange-500"></i>
                     </div>
                     <div class="faq-answer mt-2 text-gray-600">Every kitchen is licensed and inspected. Cooks submit daily temperature and cleaning logs. We monitor compliance continuously.</div>
                 </div>
                 <div class="bg-white rounded-2xl p-4">
-                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)" tabindex="0" role="button">
                         <span class="font-semibold">Can I order delivery?</span>
                         <i class="fas fa-chevron-down text-orange-500"></i>
                     </div>
                     <div class="faq-answer mt-2 text-gray-600">Yes, if the cook offers delivery. You'll see delivery options at checkout. Pickup is always available.</div>
                 </div>
                 <div class="bg-white rounded-2xl p-4">
-                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)">
+                    <div class="faq-question flex justify-between items-center" onclick="toggleFaq(this)" tabindex="0" role="button">
                         <span class="font-semibold">What if something goes wrong with my order?</span>
                         <i class="fas fa-chevron-down text-orange-500"></i>
                     </div>
                     <div class="faq-answer mt-2 text-gray-600">We have a dispute resolution team. Your payment is held until you confirm receipt, so you're protected.</div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Early Access Email Signup -->
+    <section class="py-12 bg-white border-t border-gray-100">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <h3 class="text-2xl font-bold mb-2">Get early access</h3>
+            <p class="text-gray-600 mb-4">Be the first to know when Open Garage launches in your city.</p>
+            <form id="email-signup" onsubmit="event.preventDefault(); alert('Thanks! We'll notify you.');">
+                <div class="flex flex-col sm:flex-row gap-2 justify-center">
+                    <input type="email" placeholder="Enter your email" class="border border-gray-300 rounded-full px-4 py-2 w-64" required aria-label="Email address">
+                    <button type="submit" class="bg-orange-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-orange-700">Notify me</button>
+                </div>
+            </form>
         </div>
     </section>
 
@@ -691,6 +810,20 @@
                 <button id="signup-cook-footer" class="bg-white text-orange-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100">Sign up as a cook</button>
                 <button id="find-food-footer" class="bg-orange-700 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-orange-800">Find food near me</button>
             </div>
+        </div>
+    </section>
+
+    <!-- Downloadable Resource -->
+    <section class="py-12 bg-gray-50 border-t border-gray-200">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <h3 class="text-2xl font-bold mb-2">Free guide: 5 Steps to Start Your Home Kitchen Business</h3>
+            <p class="text-gray-600 mb-4">Enter your email to download the PDF (demo).</p>
+            <form id="download-guide" onsubmit="event.preventDefault(); alert('📥 Download simulated. Check your email (demo).');">
+                <div class="flex flex-col sm:flex-row gap-2 justify-center">
+                    <input type="email" placeholder="Your email" class="border border-gray-300 rounded-full px-4 py-2 w-64" required aria-label="Email for guide">
+                    <button type="submit" class="bg-orange-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-orange-700">Download PDF</button>
+                </div>
+            </form>
         </div>
     </section>
 
@@ -710,6 +843,19 @@
 
     <!-- JavaScript -->
     <script>
+        // ========== A/B Testing ==========
+        (function() {
+            const headlines = [
+                { tagline: "Stop wondering if it's safe or legal. We've got you covered.", headline: "Turn your home kitchen into a legal, income‑generating business.", subhead: "No restaurant overhead. No confusing regulations. No corporate middlemen. Just you, your kitchen, and your neighbors." },
+                { tagline: "Finally, a way to earn from your cooking without opening a restaurant.", headline: "Your home kitchen can now be a licensed business.", subhead: "We handle compliance, payments, and logistics. You just cook." }
+            ];
+            const randomIndex = Math.floor(Math.random() * headlines.length);
+            document.getElementById('hero-tagline').innerText = headlines[randomIndex].tagline;
+            document.getElementById('hero-headline').innerHTML = '<span class="bg-orange-100 text-orange-800 px-4 py-2 rounded-2xl inline-block mb-4">🔥 1️⃣ “Open Garage”</span><br>' + headlines[randomIndex].headline;
+            document.getElementById('hero-subhead').innerText = headlines[randomIndex].subhead;
+        })();
+
+        // ========== Tab Switching ==========
         function switchTab(role) {
             document.getElementById('content-cook').classList.toggle('hidden', role !== 'cook');
             document.getElementById('content-customer').classList.toggle('hidden', role !== 'customer');
@@ -733,12 +879,14 @@
             switchTab(role);
         }
 
+        // ========== Order Simulation ==========
         function simulateOrder(kitchenName, cuisine) {
             const msg = document.getElementById('order-message');
             msg.innerHTML = `✅ Order placed at ${kitchenName} (${cuisine})! (Demo)`;
             msg.classList.add('text-green-600', 'font-semibold');
         }
 
+        // ========== Comparison Bars ==========
         window.addEventListener('load', function() {
             document.getElementById('fill1').style.width = '100%';
             document.getElementById('fill2').style.width = '100%';
@@ -746,15 +894,14 @@
             document.getElementById('meals2').innerText = '1,000 meals';
         });
 
-        // Live counter with counting animation
+        // ========== Live Counter ==========
         let count = 12450;
-        const counterEl = document.getElementById('live-counter');
         setInterval(() => {
             count += 2;
-            counterEl.innerText = count.toLocaleString();
+            document.getElementById('live-counter').innerText = count.toLocaleString();
         }, 1000);
 
-        // FAQ toggle
+        // ========== FAQ Toggle ==========
         window.toggleFaq = function(questionEl) {
             const answer = questionEl.nextElementSibling;
             const icon = questionEl.querySelector('i');
@@ -762,13 +909,15 @@
             if (answer.classList.contains('open')) {
                 answer.style.maxHeight = answer.scrollHeight + 'px';
                 icon.style.transform = 'rotate(180deg)';
+                questionEl.setAttribute('aria-expanded', 'true');
             } else {
                 answer.style.maxHeight = null;
                 icon.style.transform = 'rotate(0deg)';
+                questionEl.setAttribute('aria-expanded', 'false');
             }
         };
 
-        // Testimonial carousel
+        // ========== Testimonial Carousel ==========
         const testimonials = [
             { text: "“I used to cook for my family only. Now I earn $500 a week doing what I love.” – Maria, cook", author: "Maria" },
             { text: "“I love knowing exactly who cooked my meal. It’s like having a personal chef next door.” – Alex, customer", author: "Alex" },
@@ -780,7 +929,79 @@
             document.getElementById('testimonial').innerText = testimonials[testimonialIndex].text;
         }, 5000);
 
-        // Tour
+        // ========== Quiz Modal ==========
+        const quizModal = document.getElementById('quiz-modal');
+        const quizTrigger = document.getElementById('quiz-trigger');
+        const quizClose = document.getElementById('quiz-close');
+        const quizSubmit = document.getElementById('quiz-submit');
+        const quizOptions = document.querySelectorAll('.quiz-option');
+        let selectedRole = null;
+
+        quizTrigger.addEventListener('click', () => {
+            quizModal.classList.add('active');
+        });
+
+        quizClose.addEventListener('click', () => {
+            quizModal.classList.remove('active');
+        });
+
+        quizOptions.forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                selectedRole = e.target.getAttribute('data-role');
+                // visual feedback
+                quizOptions.forEach(o => o.classList.remove('bg-orange-600', 'text-white'));
+                e.target.classList.add('bg-orange-600', 'text-white');
+            });
+        });
+
+        quizSubmit.addEventListener('click', () => {
+            if (selectedRole) {
+                quizModal.classList.remove('active');
+                scrollToHowItWorksAndSwitch(selectedRole);
+            } else {
+                alert('Please select an option.');
+            }
+        });
+
+        // Close modal on outside click
+        quizModal.addEventListener('click', (e) => {
+            if (e.target === quizModal) {
+                quizModal.classList.remove('active');
+            }
+        });
+
+        // ========== Social Proof Toast ==========
+        const toast = document.getElementById('social-toast');
+        const toastMsg = document.getElementById('toast-message');
+        const messages = [
+            "👤 Maria just ordered from Chef Rossi",
+            "👤 Alex just ordered from Little Hanoi",
+            "🔥 12 people are viewing this page",
+            "⭐ New review: Maria's Kitchen just got a 5-star rating"
+        ];
+        setInterval(() => {
+            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+            toastMsg.innerText = randomMsg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }, 8000);
+
+        // ========== Interactive Map Pins ==========
+        const pins = document.querySelectorAll('.city-pin');
+        pins.forEach(pin => {
+            pin.addEventListener('click', (e) => {
+                const kitchen = pin.getAttribute('data-kitchen');
+                const cuisine = pin.getAttribute('data-cuisine');
+                const dist = pin.getAttribute('data-dist');
+                simulateOrder(kitchen, cuisine);
+                // Also show a quick tooltip-like alert (optional)
+                alert(`🍽️ ${kitchen} (${cuisine}) is ${dist} miles away. (Demo)`);
+            });
+        });
+
+        // ========== Tour ==========
         const tourOverlay = document.getElementById('tour-overlay');
         const tourMessage = document.getElementById('tour-message');
         const tourNext = document.getElementById('tour-next');
@@ -788,11 +1009,11 @@
         const tourSteps = [
             { element: '#comparison', message: 'We replace one big kitchen with 100 micro-kitchens.' },
             { element: '#how-it-works', message: 'Two views: one for cooks, one for customers.' },
-            { element: '#cook-dashboard', message: 'Cooks manage orders easily.', tab: 'cook' },
+            { element: '#cook-dashboard', message: 'Cooks manage orders easily and earn levels.', tab: 'cook' },
             { element: '#customer-browse', message: 'Customers browse nearby kitchens.', tab: 'customer' },
             { element: '#why-us', message: 'We solve real problems for everyone.' },
             { element: '#success', message: 'Real people are already succeeding.' },
-            { element: '.comparison-row', message: 'See how we compare to restaurants and delivery apps.' }
+            { element: '.city-map', message: 'Click pins to see kitchen details.' }
         ];
         let currentStep = 0;
 
@@ -824,7 +1045,7 @@
         tourNext.addEventListener('click', nextStep);
         tourSkip.addEventListener('click', endTour);
 
-        // Event listeners
+        // ========== Event Listeners ==========
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('tour-btn').addEventListener('click', (e) => { e.preventDefault(); startTour(); });
             document.getElementById('cook-btn').addEventListener('click', () => scrollToHowItWorksAndSwitch('cook'));
@@ -837,6 +1058,8 @@
             document.getElementById('nav-for-cooks').addEventListener('click', (e) => { e.preventDefault(); scrollToHowItWorksAndSwitch('cook'); });
             document.getElementById('nav-for-customers').addEventListener('click', (e) => { e.preventDefault(); scrollToHowItWorksAndSwitch('customer'); });
         });
+
+        // ========== Lazy loading for images (already using loading="lazy") ==========
     </script>
 </body>
 </html>
